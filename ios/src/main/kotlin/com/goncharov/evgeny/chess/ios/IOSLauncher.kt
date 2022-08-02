@@ -7,12 +7,12 @@ import org.robovm.apple.uikit.UIApplication
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration
-import com.goncharov.evgeny.chess.ChessSample
+import com.goncharov.evgeny.chess.App
 
 /** Launches the iOS (RoboVM) application. */
 class IOSLauncher : IOSApplication.Delegate() {
 	override fun createApplication(): IOSApplication {
-		return IOSApplication(ChessSample(), IOSApplicationConfiguration().apply {
+		return IOSApplication(App(), IOSApplicationConfiguration().apply {
             // Configure your application here.
         })
 	}
