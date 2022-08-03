@@ -13,6 +13,7 @@ import com.goncharov.evgeny.chess.consts.TEXT_LOGO
 import com.goncharov.evgeny.chess.consts.UI_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.UI_HEIGHT
 import com.goncharov.evgeny.chess.consts.UI_WIDTH
+import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
@@ -40,6 +41,9 @@ class SplashScreen(
                 Actions.alpha(0f),
                 Actions.fadeIn(1f),
                 Actions.fadeOut(1f),
+                Actions.run {
+                    navigator.navigation(NavigationKey.MainMenuScreenKey)
+                }
             )
         )
     }
