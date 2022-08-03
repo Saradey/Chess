@@ -35,4 +35,14 @@
       pressedOffsetY: 1
     }
   }
+  com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+    default: {
+      font: WignersFriendRoman
+    }
+  }
+  com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+    default: {
+      label: default
+    }
+  }
 }

@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.goncharov.evgeny.chess.consts.GAME_ASSET_DESCRIPTOR
+import com.goncharov.evgeny.chess.consts.UI_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.screens.GameScreen
@@ -27,16 +29,27 @@ class App : Game(), Navigator {
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
         debug("App", "start application")
-        navigation(NavigationKey.MainMenuScreenKey)
+        assetManager.load(GAME_ASSET_DESCRIPTOR)
+        assetManager.load(UI_ASSET_DESCRIPTOR)
+        assetManager.finishLoading()
+        navigation(NavigationKey.SplashScreenKey)
     }
 
     override fun navigation(key: NavigationKey) {
         debug("App", "navigation ${key::class.java.simpleName}")
         when (key) {
-            NavigationKey.SplashScreenKey -> setScreen(SplashScreen())
-            NavigationKey.MainMenuScreenKey -> setScreen(MainMenuScreen())
-            NavigationKey.GameScreenKey -> setScreen(GameScreen())
-            NavigationKey.SettingScreenKey -> setScreen(SettingsScreen())
+            NavigationKey.SplashScreenKey -> setScreen(
+                SplashScreen(this, batch, assetManager)
+            )
+            NavigationKey.MainMenuScreenKey -> setScreen(
+                MainMenuScreen()
+            )
+            NavigationKey.GameScreenKey -> setScreen(
+                GameScreen()
+            )
+            NavigationKey.SettingScreenKey -> setScreen(
+                SettingsScreen()
+            )
         }
     }
 
