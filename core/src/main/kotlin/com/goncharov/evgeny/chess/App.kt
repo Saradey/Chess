@@ -11,6 +11,8 @@ import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.screens.GameScreen
 import com.goncharov.evgeny.chess.screens.MainMenuScreen
 import com.goncharov.evgeny.chess.screens.SettingsScreen
+import com.goncharov.evgeny.chess.screens.SplashScreen
+import com.goncharov.evgeny.chess.utils.debug
 
 class App : Game(), Navigator {
 
@@ -24,14 +26,24 @@ class App : Game(), Navigator {
 
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
+        debug("App", "start application")
         navigation(NavigationKey.MainMenuScreenKey)
     }
 
     override fun navigation(key: NavigationKey) {
+        debug("App", "navigation ${key::class.java.simpleName}")
         when (key) {
+            NavigationKey.SplashScreenKey -> setScreen(SplashScreen())
             NavigationKey.MainMenuScreenKey -> setScreen(MainMenuScreen())
             NavigationKey.GameScreenKey -> setScreen(GameScreen())
             NavigationKey.SettingScreenKey -> setScreen(SettingsScreen())
         }
+    }
+
+    override fun dispose() {
+        debug("App", "dispose")
+        batch.dispose()
+        assetManager.dispose()
+        debugRender.dispose()
     }
 }

@@ -7,4 +7,6 @@ sealed class NavigationKey {
     object SettingScreenKey : NavigationKey()
 
     object GameScreenKey : NavigationKey()
+
+    object SplashScreenKey : NavigationKey()
 }
