@@ -1,0 +1,118 @@
+
+chess_game.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+b_bishop_1x
+  rotate: false
+  xy: 455, 44
+  size: 414, 418
+  orig: 414, 418
+  offset: 0, 0
+  index: -1
+b_king_1x
+  rotate: false
+  xy: 908, 1321
+  size: 440, 443
+  orig: 440, 443
+  offset: 0, 0
+  index: -1
+b_knight_1x
+  rotate: false
+  xy: 871, 60
+  size: 364, 402
+  orig: 364, 402
+  offset: 0, 0
+  index: -1
+b_pawn_1x
+  rotate: false
+  xy: 1251, 972
+  size: 292, 347
+  orig: 292, 347
+  offset: 0, 0
+  index: -1
+b_queen_1x
+  rotate: false
+  xy: 2, 2
+  size: 437, 403
+  orig: 437, 403
+  offset: 0, 0
+  index: -1
+b_rook_1x
+  rotate: false
+  xy: 1237, 78
+  size: 352, 384
+  orig: 352, 384
+  offset: 0, 0
+  index: -1
+square brown dark_1x
+  rotate: false
+  xy: 455, 1313
+  size: 451, 451
+  orig: 451, 451
+  offset: 0, 0
+  index: -1
+square brown light_1x
+  rotate: false
+  xy: 2, 407
+  size: 451, 451
+  orig: 451, 451
+  offset: 0, 0
+  index: -1
+square gray dark _1x
+  rotate: false
+  xy: 2, 860
+  size: 451, 451
+  orig: 451, 451
+  offset: 0, 0
+  index: -1
+square gray light _1x
+  rotate: false
+  xy: 2, 1313
+  size: 451, 451
+  orig: 451, 451
+  offset: 0, 0
+  index: -1
+w_bishop_1x
+  rotate: false
+  xy: 1350, 1346
+  size: 415, 418
+  orig: 415, 418
+  offset: 0, 0
+  index: -1
+w_king_1x
+  rotate: false
+  xy: 455, 868
+  size: 440, 443
+  orig: 440, 443
+  offset: 0, 0
+  index: -1
+w_knight_1x
+  rotate: false
+  xy: 894, 464
+  size: 364, 402
+  orig: 364, 402
+  offset: 0, 0
+  index: -1
+w_pawn_1x
+  rotate: false
+  xy: 1545, 997
+  size: 293, 347
+  orig: 293, 347
+  offset: 0, 0
+  index: -1
+w_queen_1x
+  rotate: false
+  xy: 455, 464
+  size: 437, 402
+  orig: 437, 402
+  offset: 0, 0
+  index: -1
+w_rook_1x
+  rotate: false
+  xy: 897, 928
+  size: 352, 383
+  orig: 352, 383
+  offset: 0, 0
+  index: -1
