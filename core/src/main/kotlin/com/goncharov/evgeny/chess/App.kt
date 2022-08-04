@@ -28,7 +28,7 @@ class App : Game(), Navigator {
 
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
-        debug("App", "start application")
+        debug(TAG, "start application")
         assetManager.load(GAME_ASSET_DESCRIPTOR)
         assetManager.load(UI_ASSET_DESCRIPTOR)
         assetManager.finishLoading()
@@ -36,13 +36,13 @@ class App : Game(), Navigator {
     }
 
     override fun navigation(key: NavigationKey) {
-        debug("App", "navigation ${key::class.java.simpleName}")
+        debug(TAG, "navigation ${key::class.java.simpleName}")
         when (key) {
             NavigationKey.SplashScreenKey -> setScreen(
                 SplashScreen(this, batch, assetManager)
             )
             NavigationKey.MainMenuScreenKey -> setScreen(
-                MainMenuScreen()
+                MainMenuScreen(this, batch, assetManager)
             )
             NavigationKey.GameScreenKey -> setScreen(
                 GameScreen()
@@ -54,9 +54,13 @@ class App : Game(), Navigator {
     }
 
     override fun dispose() {
-        debug("App", "dispose")
+        debug(TAG, "dispose")
         batch.dispose()
         assetManager.dispose()
         debugRender.dispose()
+    }
+
+    companion object {
+        private const val TAG = "App"
     }
 }
