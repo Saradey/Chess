@@ -87,7 +87,7 @@ class SettingsScreen(
         table2.add(image).padTop(6.0f)
         image = Image(uiSkin, LINE_8_ID)
         table2.add(image).padTop(-4.0f)
-        label = Label("The first move", uiSkin)
+        label = Label(TEXT_FIRST_MOVE, uiSkin)
         table2.add(label).spaceLeft(12.0f).spaceRight(12.0f)
         image = Image(uiSkin, LINE_7_ID)
         table2.add(image)

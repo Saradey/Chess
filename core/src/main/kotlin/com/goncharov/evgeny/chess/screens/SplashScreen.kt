@@ -39,8 +39,8 @@ class SplashScreen(
         label.addAction(
             Actions.sequence(
                 Actions.alpha(0f),
-                Actions.fadeIn(0.2f),
-                Actions.fadeOut(0.2f),
+                Actions.fadeIn(1f),
+                Actions.fadeOut(1f),
                 Actions.run {
                     navigator.navigation(NavigationKey.MainMenuScreenKey)
                 }
