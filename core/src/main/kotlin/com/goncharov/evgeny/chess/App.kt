@@ -54,7 +54,7 @@ class App : Game(), Navigator {
                 GameScreen()
             )
             NavigationKey.SettingScreenKey -> setScreen(
-                SettingsScreen()
+                SettingsScreen(this, batch, assetManager)
             )
         }
     }
