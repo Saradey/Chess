@@ -122,7 +122,6 @@ class MainMenuScreen(
         debug(TAG, "dispose()")
         Gdx.input.inputProcessor = null
         stage.dispose()
-        soundClickButton.dispose()
     }
 
     companion object {
