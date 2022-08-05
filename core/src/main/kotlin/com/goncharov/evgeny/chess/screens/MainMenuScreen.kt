@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport
 import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
+import com.goncharov.evgeny.chess.managers.MusicManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.utils.clearScreen
@@ -20,7 +21,8 @@ import com.goncharov.evgeny.chess.utils.debug
 class MainMenuScreen(
     private val navigator: Navigator,
     bach: SpriteBatch,
-    assetManager: AssetManager
+    assetManager: AssetManager,
+    private val musicManager: MusicManager
 ) : BaseScreen() {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
@@ -30,6 +32,7 @@ class MainMenuScreen(
 
     override fun show() {
         debug(TAG, "show()")
+        musicManager.startMainMusic()
         Gdx.input.inputProcessor = stage
         val table = Table()
         table.background = uiSkin.getDrawable(BACKGROUND_PAPER_ID)
@@ -119,6 +122,7 @@ class MainMenuScreen(
         debug(TAG, "dispose()")
         Gdx.input.inputProcessor = null
         stage.dispose()
+        soundClickButton.dispose()
     }
 
     companion object {

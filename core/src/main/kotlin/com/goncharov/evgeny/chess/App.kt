@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.goncharov.evgeny.chess.consts.CLICK_BUTTON_SOUND_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.GAME_ASSET_DESCRIPTOR
+import com.goncharov.evgeny.chess.consts.MAIN_MUSIC_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.UI_ASSET_DESCRIPTOR
+import com.goncharov.evgeny.chess.managers.MusicManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.screens.GameScreen
@@ -26,6 +28,7 @@ class App : Game(), Navigator {
     private val debugRender by lazy {
         ShapeRenderer()
     }
+    private val musicManager = MusicManager(assetManager)
 
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
@@ -33,6 +36,7 @@ class App : Game(), Navigator {
         assetManager.load(GAME_ASSET_DESCRIPTOR)
         assetManager.load(UI_ASSET_DESCRIPTOR)
         assetManager.load(CLICK_BUTTON_SOUND_DESCRIPTOR)
+        assetManager.load(MAIN_MUSIC_DESCRIPTOR)
         assetManager.finishLoading()
         navigation(NavigationKey.SplashScreenKey)
     }
@@ -44,7 +48,7 @@ class App : Game(), Navigator {
                 SplashScreen(this, batch, assetManager)
             )
             NavigationKey.MainMenuScreenKey -> setScreen(
-                MainMenuScreen(this, batch, assetManager)
+                MainMenuScreen(this, batch, assetManager, musicManager)
             )
             NavigationKey.GameScreenKey -> setScreen(
                 GameScreen()
