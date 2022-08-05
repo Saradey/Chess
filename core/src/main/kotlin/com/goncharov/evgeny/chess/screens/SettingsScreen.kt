@@ -12,10 +12,11 @@ import com.goncharov.evgeny.chess.consts.CLICK_BUTTON_SOUND_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.UI_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.UI_HEIGHT
 import com.goncharov.evgeny.chess.consts.UI_WIDTH
+import com.goncharov.evgeny.chess.extensions.addListenerKtx
+import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
-
 
 class SettingsScreen(
     private val navigator: Navigator,
@@ -27,6 +28,8 @@ class SettingsScreen(
     private val stage = Stage(viewport, bach)
     private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
     private val soundClickButton = assetManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
+    private val colorBoardThemeButtonGroup = ButtonGroup<CheckBox>()
+    private val movingPlayerButtonGroup = ButtonGroup<CheckBox>()
 
     override fun show() {
         debug(TAG, "show()")
@@ -36,7 +39,7 @@ class SettingsScreen(
         table.setFillParent(true)
         var table1 = Table()
         var table2 = Table()
-        var image: Image? = Image(uiSkin, "line_1")
+        var image = Image(uiSkin, "line_1")
         table2.add(image)
         image = Image(uiSkin, "line_8")
         table2.add(image).padTop(-9.0f)
@@ -54,11 +57,18 @@ class SettingsScreen(
         image = Image(uiSkin, "line_4")
         table2.add(image).padLeft(-1.0f).padTop(-8.0f).fill(true)
         var table3 = Table()
-        var checkBox: CheckBox? = CheckBox(" Board color black", uiSkin)
-        table3.add(checkBox).spaceBottom(10.0f).expandX().align(Align.left)
+        val checkBoxColorBlack = CheckBox(" Board color black", uiSkin)
+        checkBoxColorBlack.name = "blackBoard"
+        table3.add(checkBoxColorBlack).spaceBottom(10.0f).expandX().align(Align.left)
+        checkBoxColorBlack.addListenerKtx(::changeBoardTheme)
         table3.row()
-        checkBox = CheckBox(" Board color white", uiSkin)
-        table3.add(checkBox).expandX().align(Align.left)
+        val checkBoxWhiteColor = CheckBox(" Board color white", uiSkin)
+        checkBoxWhiteColor.addListenerKtx(::changeBoardTheme)
+        checkBoxWhiteColor.name = "whiteBoard"
+        colorBoardThemeButtonGroup.add(checkBoxColorBlack)
+        colorBoardThemeButtonGroup.add(checkBoxWhiteColor)
+        colorBoardThemeButtonGroup.setChecked("blackBoard")
+        table3.add(checkBoxWhiteColor).expandX().align(Align.left)
         table2.add(table3).growX()
         image = Image(uiSkin, "line_4")
         table2.add(image).fill(true)
@@ -94,12 +104,19 @@ class SettingsScreen(
         image = Image(uiSkin, "line_4")
         table2.add(image).padLeft(-1.0f).padTop(-6.0f).fill(true)
         table3 = Table()
-        checkBox = CheckBox(" First move white player", uiSkin)
-        table3.add(checkBox).spaceBottom(10.0f).expandX().align(Align.left)
+        val firstWhiteCheckBox = CheckBox(" First move white player", uiSkin)
+        table3.add(firstWhiteCheckBox).spaceBottom(10.0f).expandX().align(Align.left)
+        firstWhiteCheckBox.addListenerKtx(::changeMovePlayer)
+        firstWhiteCheckBox.name = "firstMovingWhite"
         table3.row()
-        checkBox = CheckBox(" First move black player", uiSkin)
-        table3.add(checkBox).align(Align.left)
+        val firstBlackCheckBox = CheckBox(" First move black player", uiSkin)
+        table3.add(firstBlackCheckBox).align(Align.left)
+        firstBlackCheckBox.addListenerKtx(::changeMovePlayer)
+        firstBlackCheckBox.name = "firstMovingBlack"
         table2.add(table3).growX().align(Align.left)
+        movingPlayerButtonGroup.add(firstWhiteCheckBox)
+        movingPlayerButtonGroup.add(firstBlackCheckBox)
+        movingPlayerButtonGroup.setChecked("firstMovingWhite")
         image = Image(uiSkin, "line_4")
         table2.add(image).fill(true)
         table1.add(table2).fillX()
@@ -116,7 +133,21 @@ class SettingsScreen(
         table.row()
         val imageTextButton = ImageTextButton("Back", uiSkin)
         table.add(imageTextButton).spaceTop(12.0f)
+        imageTextButton.addListenerKtx(::clickBack)
         stage.addActor(table)
+    }
+
+    private fun clickBack() {
+        soundClickButton.play()
+        navigator.navigation(NavigationKey.MainMenuScreenKey)
+    }
+
+    private fun changeBoardTheme() {
+        soundClickButton.play()
+    }
+
+    private fun changeMovePlayer() {
+        soundClickButton.play()
     }
 
     override fun render(delta: Float) {
