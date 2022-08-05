@@ -26,6 +26,7 @@ class MainMenuScreen(
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
     private val stage = Stage(viewport, bach)
     private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
+    private val soundClickButton = assetManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
 
     override fun show() {
         debug(TAG, "show()")
@@ -85,14 +86,17 @@ class MainMenuScreen(
     }
 
     private fun startPlayerVsPlayerGame() {
+        soundClickButton.play()
         navigator.navigation(NavigationKey.GameScreenKey)
     }
 
     private fun startSettings() {
+        soundClickButton.play()
         navigator.navigation(NavigationKey.SettingScreenKey)
     }
 
     private fun exitApplication() {
+        soundClickButton.play()
         Gdx.app.exit()
     }
 

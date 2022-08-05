@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.goncharov.evgeny.chess.consts.CLICK_BUTTON_SOUND_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.GAME_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.UI_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.navigation.NavigationKey
@@ -31,6 +32,7 @@ class App : Game(), Navigator {
         debug(TAG, "start application")
         assetManager.load(GAME_ASSET_DESCRIPTOR)
         assetManager.load(UI_ASSET_DESCRIPTOR)
+        assetManager.load(CLICK_BUTTON_SOUND_DESCRIPTOR)
         assetManager.finishLoading()
         navigation(NavigationKey.SplashScreenKey)
     }

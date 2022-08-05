@@ -11,14 +11,16 @@ import com.goncharov.evgeny.chess.App
 
 /** Launches the iOS (RoboVM) application. */
 class IOSLauncher : IOSApplication.Delegate() {
-	override fun createApplication(): IOSApplication {
-		return IOSApplication(App(), IOSApplicationConfiguration().apply {
-            // Configure your application here.
+    override fun createApplication(): IOSApplication {
+        return IOSApplication(App(), IOSApplicationConfiguration().apply {
+            orientationPortrait = false
+            orientationLandscape = true
         })
-	}
+    }
 
     companion object {
-        @JvmStatic fun main(args: Array<String>) {
+        @JvmStatic
+        fun main(args: Array<String>) {
             val pool = NSAutoreleasePool()
             val principalClass: Class<UIApplication>? = null
             val delegateClass = IOSLauncher::class.java
