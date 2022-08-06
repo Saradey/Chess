@@ -16,10 +16,4 @@ class MusicManager(
             mainMusic.isLooping = true
         }
     }
-
-    fun stopMainMusic() {
-        if (mainMusic.isPlaying) {
-            mainMusic.stop()
-        }
-    }
 }

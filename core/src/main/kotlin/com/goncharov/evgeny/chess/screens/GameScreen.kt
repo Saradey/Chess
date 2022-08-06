@@ -32,14 +32,13 @@ class GameScreen(
     private val viewport = FillViewport(WORLD_WIDTH, WORLD_HEIGHT)
     private val hudViewport = FillViewport(UI_WIDTH, WORLD_HEIGHT)
     private val engine = Engine()
-    private val stage = Stage()
+    private val stage = Stage(hudViewport, batch)
     private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
     private val chessBoardFactory = ChessBoardFactory(engine, savedSettingsManager, uiSkin)
 
     override fun show() {
         debug(TAG, "show()")
         Gdx.input.inputProcessor = stage
-        musicManager.stopMainMusic()
         chessBoardFactory.buildChessBoard()
         chessBoardFactory.addBackground()
         engine.addSystem(RenderSystem(viewport, batch))

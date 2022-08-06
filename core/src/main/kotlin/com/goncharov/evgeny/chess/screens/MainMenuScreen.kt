@@ -20,13 +20,13 @@ import com.goncharov.evgeny.chess.utils.debug
 
 class MainMenuScreen(
     private val navigator: Navigator,
-    bach: SpriteBatch,
+    batch: SpriteBatch,
     assetManager: AssetManager,
     private val musicManager: MusicManager
 ) : BaseScreen() {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
-    private val stage = Stage(viewport, bach)
+    private val stage = Stage(viewport, batch)
     private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
     private val soundClickButton = assetManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
 
