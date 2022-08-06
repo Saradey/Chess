@@ -10,6 +10,11 @@ import com.badlogic.gdx.utils.viewport.FillViewport
 import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
+import com.goncharov.evgeny.chess.managers.SavedSettingsManager
+import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.BLACK_BOARD_OPTION
+import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.FIRST_MOVING_BLACK_OPTION
+import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.FIRST_MOVING_WHITE_OPTION
+import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.WHITE_BOARD_OPTION
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.utils.clearScreen
@@ -18,7 +23,8 @@ import com.goncharov.evgeny.chess.utils.debug
 class SettingsScreen(
     private val navigator: Navigator,
     bach: SpriteBatch,
-    assetManager: AssetManager
+    assetManager: AssetManager,
+    private val savedSettingsManager: SavedSettingsManager
 ) : BaseScreen() {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
@@ -55,16 +61,16 @@ class SettingsScreen(
         table2.add(image).padLeft(-1.0f).padTop(-8.0f).fill(true)
         var table3 = Table()
         val checkBoxColorBlack = CheckBox(TEXT_BOARD_COLOR_BLACK, uiSkin)
-        checkBoxColorBlack.name = "blackBoard"
+        checkBoxColorBlack.name = BLACK_BOARD_OPTION
         table3.add(checkBoxColorBlack).spaceBottom(10.0f).expandX().align(Align.left)
         checkBoxColorBlack.addListenerKtx(::changeBoardTheme)
         table3.row()
         val checkBoxWhiteColor = CheckBox(TEXT_BOARD_COLOR_WHITE, uiSkin)
         checkBoxWhiteColor.addListenerKtx(::changeBoardTheme)
-        checkBoxWhiteColor.name = "whiteBoard"
-        colorBoardThemeButtonGroup.add(checkBoxColorBlack)
+        checkBoxWhiteColor.name = WHITE_BOARD_OPTION
         colorBoardThemeButtonGroup.add(checkBoxWhiteColor)
-        colorBoardThemeButtonGroup.setChecked("blackBoard")
+        colorBoardThemeButtonGroup.add(checkBoxColorBlack)
+        colorBoardThemeButtonGroup.setChecked(getTextBoardChecked())
         table3.add(checkBoxWhiteColor).expandX().align(Align.left)
         table2.add(table3).growX()
         image = Image(uiSkin, LINE_4_ID)
@@ -104,16 +110,16 @@ class SettingsScreen(
         val firstWhiteCheckBox = CheckBox(TEXT_FIRST_MOVE_WHITE, uiSkin)
         table3.add(firstWhiteCheckBox).spaceBottom(10.0f).expandX().align(Align.left)
         firstWhiteCheckBox.addListenerKtx(::changeMovePlayer)
-        firstWhiteCheckBox.name = "firstMovingWhite"
+        firstWhiteCheckBox.name = FIRST_MOVING_WHITE_OPTION
         table3.row()
         val firstBlackCheckBox = CheckBox(TEXT_FIRST_MOVE_BLACK, uiSkin)
         table3.add(firstBlackCheckBox).align(Align.left)
         firstBlackCheckBox.addListenerKtx(::changeMovePlayer)
-        firstBlackCheckBox.name = "firstMovingBlack"
+        firstBlackCheckBox.name = FIRST_MOVING_BLACK_OPTION
         table2.add(table3).growX().align(Align.left)
         movingPlayerButtonGroup.add(firstWhiteCheckBox)
         movingPlayerButtonGroup.add(firstBlackCheckBox)
-        movingPlayerButtonGroup.setChecked("firstMovingWhite")
+        movingPlayerButtonGroup.setChecked(getTextFirstMovingChecked())
         image = Image(uiSkin, LINE_4_ID)
         table2.add(image).fill(true)
         table1.add(table2).fillX()
@@ -134,6 +140,22 @@ class SettingsScreen(
         stage.addActor(table)
     }
 
+    private fun getTextBoardChecked(): String {
+        return if (savedSettingsManager.getBoardTheme() == WHITE_BOARD_OPTION) {
+            TEXT_BOARD_COLOR_WHITE
+        } else {
+            TEXT_BOARD_COLOR_BLACK
+        }
+    }
+
+    private fun getTextFirstMovingChecked(): String {
+        return if (savedSettingsManager.getFirstMoving() == FIRST_MOVING_WHITE_OPTION) {
+            TEXT_FIRST_MOVE_WHITE
+        } else {
+            TEXT_FIRST_MOVE_BLACK
+        }
+    }
+
     private fun clickBack() {
         soundClickButton.play()
         navigator.navigation(NavigationKey.MainMenuScreenKey)
@@ -141,10 +163,18 @@ class SettingsScreen(
 
     private fun changeBoardTheme() {
         soundClickButton.play()
+        colorBoardThemeButtonGroup?.checked ?: return
+        savedSettingsManager.savedBoardTheme(
+            colorBoardThemeButtonGroup?.checked?.name ?: WHITE_BOARD_OPTION
+        )
     }
 
     private fun changeMovePlayer() {
         soundClickButton.play()
+        movingPlayerButtonGroup.checked ?: return
+        savedSettingsManager.savedFirstMoving(
+            movingPlayerButtonGroup.checked.name
+        )
     }
 
     override fun render(delta: Float) {

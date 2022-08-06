@@ -11,6 +11,7 @@ import com.goncharov.evgeny.chess.consts.GAME_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.MAIN_MUSIC_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.UI_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.managers.MusicManager
+import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.screens.GameScreen
@@ -29,6 +30,7 @@ class App : Game(), Navigator {
         ShapeRenderer()
     }
     private val musicManager = MusicManager(assetManager)
+    private val savedSettingsManager = SavedSettingsManager()
 
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
@@ -54,7 +56,7 @@ class App : Game(), Navigator {
                 GameScreen()
             )
             NavigationKey.SettingScreenKey -> setScreen(
-                SettingsScreen(this, batch, assetManager)
+                SettingsScreen(this, batch, assetManager, savedSettingsManager)
             )
         }
     }
