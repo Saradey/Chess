@@ -8,21 +8,24 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.goncharov.evgeny.chess.base.BaseScreen
+import com.goncharov.evgeny.chess.consts.UI_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.UI_WIDTH
 import com.goncharov.evgeny.chess.consts.WORLD_HEIGHT
 import com.goncharov.evgeny.chess.consts.WORLD_WIDTH
+import com.goncharov.evgeny.chess.factory.ChessBoardFactory
 import com.goncharov.evgeny.chess.managers.MusicManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.Navigator
+import com.goncharov.evgeny.chess.systems.RenderSystem
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
 
 class GameScreen(
     private val batch: SpriteBatch,
-    private val assetManager: AssetManager,
+    assetManager: AssetManager,
     private val debugRender: ShapeRenderer,
     private val musicManager: MusicManager,
-    private val savedSettingsManager: SavedSettingsManager,
+    savedSettingsManager: SavedSettingsManager,
     private val navigator: Navigator
 ) : BaseScreen() {
 
@@ -30,11 +33,16 @@ class GameScreen(
     private val hudViewport = FillViewport(UI_WIDTH, WORLD_HEIGHT)
     private val engine = Engine()
     private val stage = Stage()
+    private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
+    private val chessBoardFactory = ChessBoardFactory(engine, savedSettingsManager, uiSkin)
 
     override fun show() {
         debug(TAG, "show()")
         Gdx.input.inputProcessor = stage
         musicManager.stopMainMusic()
+        chessBoardFactory.buildChessBoard()
+        chessBoardFactory.addBackground()
+        engine.addSystem(RenderSystem(viewport, batch))
     }
 
     override fun render(delta: Float) {

@@ -163,9 +163,9 @@ class SettingsScreen(
 
     private fun changeBoardTheme() {
         soundClickButton.play()
-        colorBoardThemeButtonGroup?.checked ?: return
+        colorBoardThemeButtonGroup.checked ?: return
         savedSettingsManager.savedBoardTheme(
-            colorBoardThemeButtonGroup?.checked?.name ?: WHITE_BOARD_OPTION
+            colorBoardThemeButtonGroup.checked?.name ?: WHITE_BOARD_OPTION
         )
     }
 

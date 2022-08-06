@@ -6,5 +6,5 @@ const val WINDOW_HEIGHT = 720
 const val UI_WIDTH = 984.6f
 const val UI_HEIGHT = 553.8f
 
-const val WORLD_WIDTH = 12.8f
-const val WORLD_HEIGHT = 7.2f
+const val WORLD_WIDTH = 1280f
+const val WORLD_HEIGHT = 720f
