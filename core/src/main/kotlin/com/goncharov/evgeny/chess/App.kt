@@ -53,7 +53,14 @@ class App : Game(), Navigator {
                 MainMenuScreen(this, batch, assetManager, musicManager)
             )
             NavigationKey.GameScreenKey -> setScreen(
-                GameScreen()
+                GameScreen(
+                    batch,
+                    assetManager,
+                    debugRender,
+                    musicManager,
+                    savedSettingsManager,
+                    this
+                )
             )
             NavigationKey.SettingScreenKey -> setScreen(
                 SettingsScreen(this, batch, assetManager, savedSettingsManager)
