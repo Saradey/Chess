@@ -60,7 +60,6 @@ class GameScreen(
 
     override fun hide() {
         dispose()
-        musicManager.startMainMusic()
     }
 
     override fun dispose() {
