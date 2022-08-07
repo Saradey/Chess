@@ -10,7 +10,7 @@ import com.goncharov.evgeny.chess.components.CellComponent
 import com.goncharov.evgeny.chess.components.SpriteComponent
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
-import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.WHITE_BOARD_OPTION
+import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.GRAY_BOARD_OPTION
 
 class ChessBoardFactory(
     private val engine: Engine,
@@ -65,10 +65,10 @@ class ChessBoardFactory(
     }
 
     private fun getLightColorBoard() = if (
-        savedSettingsManager.getBoardTheme() == WHITE_BOARD_OPTION
+        savedSettingsManager.getBoardTheme() == GRAY_BOARD_OPTION
     ) gameAtlas.findRegion(SQUARE_GRAY_LIGHT_ID) else gameAtlas.findRegion(SQUARE_BROWN_LIGHT_ID)
 
     private fun getDarkColorBoard() = if (
-        savedSettingsManager.getBoardTheme() == WHITE_BOARD_OPTION
+        savedSettingsManager.getBoardTheme() == GRAY_BOARD_OPTION
     ) gameAtlas.findRegion(SQUARE_GRAY_DARK_ID) else gameAtlas.findRegion(SQUARE_BROWN_DARK_ID)
 }

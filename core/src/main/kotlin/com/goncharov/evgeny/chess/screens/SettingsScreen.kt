@@ -11,10 +11,10 @@ import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
-import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.BLACK_BOARD_OPTION
+import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.BROWN_BOARD_OPTION
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.FIRST_MOVING_BLACK_OPTION
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.FIRST_MOVING_WHITE_OPTION
-import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.WHITE_BOARD_OPTION
+import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.GRAY_BOARD_OPTION
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.utils.clearScreen
@@ -60,14 +60,14 @@ class SettingsScreen(
         image = Image(uiSkin, LINE_4_ID)
         table2.add(image).padLeft(-1.0f).padTop(-8.0f).fill(true)
         var table3 = Table()
-        val checkBoxColorBlack = CheckBox(TEXT_BOARD_COLOR_BLACK, uiSkin)
-        checkBoxColorBlack.name = BLACK_BOARD_OPTION
+        val checkBoxColorBlack = CheckBox(TEXT_BOARD_COLOR_BROWN, uiSkin)
+        checkBoxColorBlack.name = BROWN_BOARD_OPTION
         table3.add(checkBoxColorBlack).spaceBottom(10.0f).expandX().align(Align.left)
         checkBoxColorBlack.addListenerKtx(::changeBoardTheme)
         table3.row()
-        val checkBoxWhiteColor = CheckBox(TEXT_BOARD_COLOR_WHITE, uiSkin)
+        val checkBoxWhiteColor = CheckBox(TEXT_BOARD_COLOR_GRAY, uiSkin)
         checkBoxWhiteColor.addListenerKtx(::changeBoardTheme)
-        checkBoxWhiteColor.name = WHITE_BOARD_OPTION
+        checkBoxWhiteColor.name = GRAY_BOARD_OPTION
         colorBoardThemeButtonGroup.add(checkBoxWhiteColor)
         colorBoardThemeButtonGroup.add(checkBoxColorBlack)
         colorBoardThemeButtonGroup.setChecked(getTextBoardChecked())
@@ -141,10 +141,10 @@ class SettingsScreen(
     }
 
     private fun getTextBoardChecked(): String {
-        return if (savedSettingsManager.getBoardTheme() == WHITE_BOARD_OPTION) {
-            TEXT_BOARD_COLOR_WHITE
+        return if (savedSettingsManager.getBoardTheme() == GRAY_BOARD_OPTION) {
+            TEXT_BOARD_COLOR_GRAY
         } else {
-            TEXT_BOARD_COLOR_BLACK
+            TEXT_BOARD_COLOR_BROWN
         }
     }
 
@@ -165,7 +165,7 @@ class SettingsScreen(
         soundClickButton.play()
         colorBoardThemeButtonGroup.checked ?: return
         savedSettingsManager.savedBoardTheme(
-            colorBoardThemeButtonGroup.checked?.name ?: WHITE_BOARD_OPTION
+            colorBoardThemeButtonGroup.checked?.name ?: GRAY_BOARD_OPTION
         )
     }
 
