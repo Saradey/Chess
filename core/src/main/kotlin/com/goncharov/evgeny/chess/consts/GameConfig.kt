@@ -8,3 +8,6 @@ const val UI_HEIGHT = 553.8f
 
 const val WORLD_WIDTH = 1280f
 const val WORLD_HEIGHT = 720f
+
+const val WORLD_ORIGIN_WIDTH = WORLD_WIDTH / 2
+const val WORlD_ORIGIN_HEIGHT = WORLD_HEIGHT / 2

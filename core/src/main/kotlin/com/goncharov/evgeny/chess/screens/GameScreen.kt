@@ -34,7 +34,8 @@ class GameScreen(
     private val engine = Engine()
     private val stage = Stage(hudViewport, batch)
     private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
-    private val chessBoardFactory = ChessBoardFactory(engine, savedSettingsManager, uiSkin)
+    private val chessBoardFactory =
+        ChessBoardFactory(engine, savedSettingsManager, uiSkin, assetManager)
 
     override fun show() {
         debug(TAG, "show()")
