@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.goncharov.evgeny.chess.components.BackgroundComponent
 import com.goncharov.evgeny.chess.components.CellComponent
+import com.goncharov.evgeny.chess.components.PiecesComponent
 import com.goncharov.evgeny.chess.components.SpriteComponent
 import com.goncharov.evgeny.chess.components.mappers.sprites
 
@@ -22,6 +23,10 @@ class RenderSystem(
         SpriteComponent::class.java,
         CellComponent::class.java
     ).get()
+    private val familyPiecesSprite = Family.all(
+        SpriteComponent::class.java,
+        PiecesComponent::class.java
+    ).get()
 
     override fun update(deltaTime: Float) {
         viewport.apply()
@@ -31,6 +36,9 @@ class RenderSystem(
             sprites[entity].sprite.draw(batch)
         }
         engine.getEntitiesFor(familyBoardSprite).forEach { entity ->
+            sprites[entity].sprite.draw(batch)
+        }
+        engine.getEntitiesFor(familyPiecesSprite).forEach { entity ->
             sprites[entity].sprite.draw(batch)
         }
         batch.end()

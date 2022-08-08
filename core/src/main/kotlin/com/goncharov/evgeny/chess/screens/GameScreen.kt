@@ -13,7 +13,7 @@ import com.goncharov.evgeny.chess.consts.UI_WIDTH
 import com.goncharov.evgeny.chess.consts.WORLD_HEIGHT
 import com.goncharov.evgeny.chess.consts.WORLD_WIDTH
 import com.goncharov.evgeny.chess.factory.ChessBoardFactory
-import com.goncharov.evgeny.chess.managers.MusicManager
+import com.goncharov.evgeny.chess.factory.PiecesFactory
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.systems.RenderSystem
@@ -24,7 +24,6 @@ class GameScreen(
     private val batch: SpriteBatch,
     assetManager: AssetManager,
     private val debugRender: ShapeRenderer,
-    private val musicManager: MusicManager,
     savedSettingsManager: SavedSettingsManager,
     private val navigator: Navigator
 ) : BaseScreen() {
@@ -36,12 +35,15 @@ class GameScreen(
     private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
     private val chessBoardFactory =
         ChessBoardFactory(engine, savedSettingsManager, uiSkin, assetManager)
+    private val piecesFactory = PiecesFactory(engine, savedSettingsManager, assetManager)
 
     override fun show() {
         debug(TAG, "show()")
         Gdx.input.inputProcessor = stage
         chessBoardFactory.buildChessBoard()
         chessBoardFactory.addBackground()
+        piecesFactory.buildWhitePiecesPlayer()
+        piecesFactory.buildBlackPiecesPlayer()
         engine.addSystem(RenderSystem(viewport, batch))
     }
 

@@ -57,7 +57,6 @@ class App : Game(), Navigator {
                     batch,
                     assetManager,
                     debugRender,
-                    musicManager,
                     savedSettingsManager,
                     this
                 )
