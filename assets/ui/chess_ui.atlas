@@ -11,6 +11,20 @@ WignersFriendRoman
   orig: 506, 88
   offset: 0, 0
   index: -1
+back_button_1
+  rotate: false
+  xy: 1, 192
+  size: 39, 36
+  orig: 39, 36
+  offset: 0, 0
+  index: -1
+back_button_2
+  rotate: false
+  xy: 294, 256
+  size: 39, 36
+  orig: 39, 36
+  offset: 0, 0
+  index: -1
 button_1
   rotate: false
   xy: 515, 834
@@ -34,21 +48,21 @@ button_3
   index: -1
 check_1
   rotate: false
-  xy: 1, 204
+  xy: 515, 744
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 check_2
   rotate: false
-  xy: 294, 268
+  xy: 808, 860
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 line_1
   rotate: false
-  xy: 27, 211
+  xy: 335, 275
   size: 17, 17
   orig: 17, 17
   offset: 0, 0
@@ -62,28 +76,28 @@ line_2
   index: -1
 line_3
   rotate: false
-  xy: 515, 749
+  xy: 1, 171
   size: 18, 19
   orig: 18, 19
   offset: 0, 0
   index: -1
 line_4
   rotate: false
-  xy: 515, 688
+  xy: 808, 799
   size: 10, 59
   orig: 10, 59
   offset: 0, 0
   index: -1
 line_5
   rotate: false
-  xy: 808, 866
+  xy: 42, 210
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 line_6
   rotate: false
-  xy: 1, 184
+  xy: 294, 236
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
@@ -97,7 +111,7 @@ line_7
   index: -1
 line_8
   rotate: false
-  xy: 294, 256
+  xy: 515, 732
   size: 14, 10
   orig: 14, 10
   offset: 0, 0

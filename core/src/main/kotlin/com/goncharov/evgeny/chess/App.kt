@@ -26,9 +26,6 @@ class App : Game(), Navigator {
         SpriteBatch()
     }
     private val assetManager = AssetManager()
-    private val debugRender by lazy {
-        ShapeRenderer()
-    }
     private val musicManager = MusicManager(assetManager)
     private val savedSettingsManager = SavedSettingsManager()
 
@@ -56,7 +53,6 @@ class App : Game(), Navigator {
                 GameScreen(
                     batch,
                     assetManager,
-                    debugRender,
                     savedSettingsManager,
                     this
                 )
@@ -71,7 +67,6 @@ class App : Game(), Navigator {
         debug(TAG, "dispose")
         batch.dispose()
         assetManager.dispose()
-        debugRender.dispose()
     }
 
     companion object {

@@ -1,48 +1,54 @@
 {
-  com.badlogic.gdx.graphics.g2d.BitmapFont: {
-    WignersFriendRoman: {
-      file: WignersFriendRoman.fnt
-    }
-  }
-  com.badlogic.gdx.graphics.Color: {
-    black: {
-      r: 0
-      g: 0
-      b: 0
-      a: 1
-    }
-    white: {
-      r: 1
-      g: 1
-      b: 1
-      a: 1
-    }
-  }
-  com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
-    default: {
-      checkboxOn: check_2
-      checkboxOff: check_1
-      font: WignersFriendRoman
-    }
-  }
-  com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
-    default: {
-      font: WignersFriendRoman
-      up: button_1
-      down: button_2
-      disabled: button_3
-      pressedOffsetX: 1
-      pressedOffsetY: 1
-    }
-  }
-  com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-    default: {
-      font: WignersFriendRoman
-    }
-  }
-  com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
-    default: {
-      label: default
-    }
-  }
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	WignersFriendRoman: {
+		file: WignersFriendRoman.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: back_button_1
+		down: back_button_2
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: check_2
+		checkboxOff: check_1
+		font: WignersFriendRoman
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+	default: {
+		font: WignersFriendRoman
+		up: button_1
+		down: button_2
+		disabled: button_3
+		pressedOffsetX: 1
+		pressedOffsetY: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: WignersFriendRoman
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
 }
