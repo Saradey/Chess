@@ -22,8 +22,9 @@ class ChessBoardFactory(
     private val gameAtlas = assetManager[GAME_ASSET_DESCRIPTOR]
 
     fun buildChessBoard() {
-        val spriteBoardHeight = WORLD_HEIGHT / 8
+        val spriteBoardHeight = (WORLD_HEIGHT - SIZE_SHADOW * 2) / 8
         val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
+        val heightOffset = SIZE_SHADOW
         for (y in 0..7) {
             for (x in 0..7) {
                 val spriteBoard = when {
@@ -36,7 +37,7 @@ class ChessBoardFactory(
                 spriteBoard.setSize(spriteBoardHeight, spriteBoardHeight)
                 spriteBoard.setPosition(
                     x * spriteBoardHeight + widthOffset,
-                    y * spriteBoardHeight
+                    y * spriteBoardHeight + heightOffset
                 )
                 val cell = Entity()
                 val cellComponent = CellComponent()
@@ -49,12 +50,22 @@ class ChessBoardFactory(
         addShadow(
             0f,
             spriteBoardHeight * 8 + widthOffset,
-            0f
+            SIZE_SHADOW,
         )
         addShadow(
             180f,
             widthOffset - SIZE_SHADOW,
-            0f
+            -SIZE_SHADOW,
+        )
+        addShadow(
+            270f,
+            widthOffset - 5f + WORlD_ORIGIN_HEIGHT,
+            -WORlD_ORIGIN_HEIGHT + 5f,
+        )
+        addShadow(
+            90f,
+            WORLD_ORIGIN_WIDTH - 25f,
+            WORlD_ORIGIN_HEIGHT - 5f,
         )
     }
 
@@ -78,7 +89,7 @@ class ChessBoardFactory(
     private fun addShadow(
         rotate: Float,
         x: Float,
-        y: Float
+        y: Float,
     ) {
         val shadowEntity = Entity()
         val shadowComponent = ShadowComponent()
@@ -86,7 +97,7 @@ class ChessBoardFactory(
         val spriteShadow = Sprite(gameAtlas.findRegion(RIGHT_SHADOW_BOARD))
         spriteShadow.setSize(
             SIZE_SHADOW,
-            WORLD_HEIGHT
+            WORLD_HEIGHT - SIZE_SHADOW * 2
         )
         spriteShadow.setOrigin(SIZE_SHADOW / 2f, WORLD_HEIGHT / 2f)
         spriteShadow.setPosition(
