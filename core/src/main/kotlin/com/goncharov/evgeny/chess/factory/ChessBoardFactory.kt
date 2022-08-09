@@ -22,7 +22,7 @@ class ChessBoardFactory(
     private val gameAtlas = assetManager[GAME_ASSET_DESCRIPTOR]
 
     fun buildChessBoard() {
-        val spriteBoardHeight = (WORLD_HEIGHT - SIZE_SHADOW * 2) / 8
+        val spriteBoardHeight = SPRITE_HEIGHT_WIDTH
         val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
         val heightOffset = SIZE_SHADOW
         for (y in 0..7) {
@@ -117,8 +117,4 @@ class ChessBoardFactory(
     private fun getDarkColorBoard() = if (
         savedSettingsManager.getBoardTheme() == GRAY_BOARD_OPTION
     ) gameAtlas.findRegion(SQUARE_GRAY_DARK_ID) else gameAtlas.findRegion(SQUARE_BROWN_DARK_ID)
-
-    companion object {
-        private const val SIZE_SHADOW = 10f
-    }
 }

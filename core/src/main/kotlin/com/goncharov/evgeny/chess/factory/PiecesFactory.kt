@@ -22,49 +22,49 @@ class PiecesFactory(
         for (index in 0..7) {
             addEntityPieces(
                 index * SPRITE_HEIGHT_WIDTH + widthOffset,
-                SPRITE_HEIGHT_WIDTH,
+                SPRITE_HEIGHT_WIDTH + SIZE_SHADOW,
                 Sprite(gameAtlas.findRegion(WHITE_PAWN_ID)),
             )
         }
         //add tower
-        addEntityPieces(widthOffset, 0f, Sprite(gameAtlas.findRegion(WHITE_ROOK_ID)))
+        addEntityPieces(widthOffset, SIZE_SHADOW, Sprite(gameAtlas.findRegion(WHITE_ROOK_ID)))
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 7,
-            0f,
+            SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(WHITE_ROOK_ID))
         )
         //add horse
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH,
-            0f,
+            SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(WHITE_KNIGHT_ID))
         )
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 6,
-            0f,
+            SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(WHITE_KNIGHT_ID))
         )
         //add elephant
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 2,
-            0f,
+            SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(WHITE_BISHOP_ID))
         )
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 5,
-            0f,
+            SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(WHITE_BISHOP_ID))
         )
         //add queen
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 3,
-            0f,
+            SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(WHITE_QUEEN_ID))
         )
         //add king
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 4,
-            0f,
+            SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(WHITE_KING_ID))
         )
     }
@@ -75,53 +75,53 @@ class PiecesFactory(
         for (index in 0..7) {
             addEntityPieces(
                 index * SPRITE_HEIGHT_WIDTH + widthOffset,
-                WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH * 2,
+                WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH * 2 - SIZE_SHADOW,
                 Sprite(gameAtlas.findRegion(BLACK_PAWN_ID)),
             )
         }
         //add tower
         addEntityPieces(
             widthOffset,
-            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH,
+            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_ROOK_ID))
         )
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 7,
-            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH,
+            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_ROOK_ID))
         )
         //add horse
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH,
-            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH,
+            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_KNIGHT_ID))
         )
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 6,
-            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH,
+            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_KNIGHT_ID))
         )
         //add elephant
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 2,
-            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH,
+            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_BISHOP_ID))
         )
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 5,
-            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH,
+            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_BISHOP_ID))
         )
         //add queen
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 3,
-            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH,
+            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_QUEEN_ID))
         )
         //add king
         addEntityPieces(
             widthOffset + SPRITE_HEIGHT_WIDTH * 4,
-            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH,
+            WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_KING_ID))
         )
     }
