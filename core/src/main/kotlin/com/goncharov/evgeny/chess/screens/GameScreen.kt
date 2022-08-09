@@ -16,6 +16,7 @@ import com.goncharov.evgeny.chess.factory.PiecesFactory
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
+import com.goncharov.evgeny.chess.systems.DragAndDropSystem
 import com.goncharov.evgeny.chess.systems.RenderSystem
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
@@ -45,6 +46,7 @@ class GameScreen(
         piecesFactory.buildWhitePiecesPlayer()
         piecesFactory.buildBlackPiecesPlayer()
         engine.addSystem(RenderSystem(viewport, batch))
+        engine.addSystem(DragAndDropSystem(viewport))
     }
 
     override fun render(delta: Float) {

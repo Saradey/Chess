@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.goncharov.evgeny.chess.components.*
+import com.goncharov.evgeny.chess.components.mappers.pieces
 import com.goncharov.evgeny.chess.components.mappers.sprites
 
 class RenderSystem(
@@ -46,7 +47,9 @@ class RenderSystem(
         engine.getEntitiesFor(familyShadowSprite).forEach { entity ->
             sprites[entity].sprite.draw(batch)
         }
-        engine.getEntitiesFor(familyPiecesSprite).forEach { entity ->
+        engine.getEntitiesFor(familyPiecesSprite).sortedBy { entity ->
+            pieces[entity].isDragged
+        }.forEach { entity ->
             sprites[entity].sprite.draw(batch)
         }
         batch.end()
