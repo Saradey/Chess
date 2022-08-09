@@ -4,16 +4,17 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.goncharov.evgeny.chess.components.BackgroundComponent
-import com.goncharov.evgeny.chess.components.CellComponent
-import com.goncharov.evgeny.chess.components.PiecesComponent
-import com.goncharov.evgeny.chess.components.SpriteComponent
+import com.goncharov.evgeny.chess.components.*
 import com.goncharov.evgeny.chess.components.mappers.sprites
 
 class RenderSystem(
     private val viewport: Viewport,
     private val batch: SpriteBatch
 ) : EntitySystem() {
+
+    init {
+//        (viewport.camera as OrthographicCamera).zoom += 2
+    }
 
     private val familyBackgroundSprite = Family.all(
         SpriteComponent::class.java,
@@ -27,6 +28,10 @@ class RenderSystem(
         SpriteComponent::class.java,
         PiecesComponent::class.java
     ).get()
+    private val familyShadowSprite = Family.all(
+        SpriteComponent::class.java,
+        ShadowComponent::class.java
+    ).get()
 
     override fun update(deltaTime: Float) {
         viewport.apply()
@@ -36,6 +41,9 @@ class RenderSystem(
             sprites[entity].sprite.draw(batch)
         }
         engine.getEntitiesFor(familyBoardSprite).forEach { entity ->
+            sprites[entity].sprite.draw(batch)
+        }
+        engine.getEntitiesFor(familyShadowSprite).forEach { entity ->
             sprites[entity].sprite.draw(batch)
         }
         engine.getEntitiesFor(familyPiecesSprite).forEach { entity ->

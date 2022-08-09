@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.goncharov.evgeny.chess.components.BackgroundComponent
 import com.goncharov.evgeny.chess.components.CellComponent
+import com.goncharov.evgeny.chess.components.ShadowComponent
 import com.goncharov.evgeny.chess.components.SpriteComponent
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
@@ -45,6 +46,16 @@ class ChessBoardFactory(
                 engine.addEntity(cell)
             }
         }
+        addShadow(
+            0f,
+            spriteBoardHeight * 8 + widthOffset,
+            0f
+        )
+        addShadow(
+            180f,
+            widthOffset - SIZE_SHADOW,
+            0f
+        )
     }
 
     fun addBackground() {
@@ -64,6 +75,30 @@ class ChessBoardFactory(
         engine.addEntity(backgroundEntity)
     }
 
+    private fun addShadow(
+        rotate: Float,
+        x: Float,
+        y: Float
+    ) {
+        val shadowEntity = Entity()
+        val shadowComponent = ShadowComponent()
+        shadowEntity.add(shadowComponent)
+        val spriteShadow = Sprite(gameAtlas.findRegion(RIGHT_SHADOW_BOARD))
+        spriteShadow.setSize(
+            SIZE_SHADOW,
+            WORLD_HEIGHT
+        )
+        spriteShadow.setOrigin(SIZE_SHADOW / 2f, WORLD_HEIGHT / 2f)
+        spriteShadow.setPosition(
+            x,
+            y
+        )
+        spriteShadow.rotation = rotate
+        val spriteComponent = SpriteComponent(spriteShadow)
+        shadowEntity.add(spriteComponent)
+        engine.addEntity(shadowEntity)
+    }
+
     private fun getLightColorBoard() = if (
         savedSettingsManager.getBoardTheme() == GRAY_BOARD_OPTION
     ) gameAtlas.findRegion(SQUARE_GRAY_LIGHT_ID) else gameAtlas.findRegion(SQUARE_BROWN_LIGHT_ID)
@@ -71,4 +106,8 @@ class ChessBoardFactory(
     private fun getDarkColorBoard() = if (
         savedSettingsManager.getBoardTheme() == GRAY_BOARD_OPTION
     ) gameAtlas.findRegion(SQUARE_GRAY_DARK_ID) else gameAtlas.findRegion(SQUARE_BROWN_DARK_ID)
+
+    companion object {
+        private const val SIZE_SHADOW = 10f
+    }
 }
