@@ -12,6 +12,7 @@ import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.factory.ChessBoardFactory
+import com.goncharov.evgeny.chess.factory.GameFactory
 import com.goncharov.evgeny.chess.factory.PiecesFactory
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
@@ -37,9 +38,11 @@ class GameScreen(
         ChessBoardFactory(engine, savedSettingsManager, uiSkin, assetManager)
     private val piecesFactory = PiecesFactory(engine, savedSettingsManager, assetManager)
     private val soundClickButton = assetManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
+    private val gameFactory = GameFactory(savedSettingsManager, engine)
 
     override fun show() {
         debug(TAG, "show()")
+        gameFactory.initialGame()
         initUi()
         chessBoardFactory.buildChessBoard()
         chessBoardFactory.addBackground()
