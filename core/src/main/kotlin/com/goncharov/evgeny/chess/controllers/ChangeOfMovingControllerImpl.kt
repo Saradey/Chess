@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.goncharov.evgeny.chess.components.mappers.game
 import com.goncharov.evgeny.chess.consts.*
-import com.goncharov.evgeny.chess.logic.Step
+import com.goncharov.evgeny.chess.logic.PlayerColor
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.FIRST_MOVING_WHITE_OPTION
 
@@ -33,7 +33,7 @@ class ChangeOfMovingControllerImpl(
     }
 
     override fun showMessageMoved() {
-        if (gameComponent.step == Step.WhiteStep) {
+        if (gameComponent.step == PlayerColor.White) {
             label?.setText(TEXT_WHITE_PLAYER_MOVING)
         } else {
             label?.setText(TEXT_BLACK_PLAYER_MOVING)

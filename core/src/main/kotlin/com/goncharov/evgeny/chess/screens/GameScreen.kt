@@ -13,8 +13,8 @@ import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.controllers.ChangeOfMovingController
 import com.goncharov.evgeny.chess.controllers.ChangeOfMovingControllerImpl
-import com.goncharov.evgeny.chess.controllers.GameController
-import com.goncharov.evgeny.chess.controllers.GameControllerImpl
+import com.goncharov.evgeny.chess.controllers.GameInteractor
+import com.goncharov.evgeny.chess.controllers.GameInteractorImpl
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.factory.ChessBoardFactory
 import com.goncharov.evgeny.chess.factory.GameFactory
@@ -47,7 +47,7 @@ class GameScreen(
     private val shapeRenderer = ShapeRenderer()
     private val changeOfMovingController: ChangeOfMovingController =
         ChangeOfMovingControllerImpl(savedSettingsManager, engine)
-    private val gameController: GameController = GameControllerImpl(engine)
+    private val gameController: GameInteractor = GameInteractorImpl(engine)
 
     override fun show() {
         shapeRenderer.color = Color.RED

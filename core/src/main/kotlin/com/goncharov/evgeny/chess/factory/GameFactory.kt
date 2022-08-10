@@ -3,7 +3,7 @@ package com.goncharov.evgeny.chess.factory
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.goncharov.evgeny.chess.components.GameComponent
-import com.goncharov.evgeny.chess.logic.Step
+import com.goncharov.evgeny.chess.logic.PlayerColor
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.FIRST_MOVING_WHITE_OPTION
 
@@ -21,8 +21,8 @@ class GameFactory(
 
     private fun getFirstStep() =
         if (savedSettingsManager.getFirstMoving() == FIRST_MOVING_WHITE_OPTION) {
-            Step.WhiteStep
+            PlayerColor.White
         } else {
-            Step.BlackStep
+            PlayerColor.Black
         }
 }

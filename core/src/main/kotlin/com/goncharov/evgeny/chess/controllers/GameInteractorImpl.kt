@@ -3,21 +3,25 @@ package com.goncharov.evgeny.chess.controllers
 import com.badlogic.ashley.core.Engine
 import com.goncharov.evgeny.chess.components.mappers.game
 import com.goncharov.evgeny.chess.consts.gameFamily
-import com.goncharov.evgeny.chess.logic.Step
+import com.goncharov.evgeny.chess.logic.PlayerColor
 
-class GameControllerImpl(
+class GameInteractorImpl(
     engine: Engine
-) : GameController {
+) : GameInteractor {
 
     private val gameComponent by lazy {
         game[engine.getEntitiesFor(gameFamily).first()]
     }
 
     override fun turnChanged() {
-        gameComponent.step = if (gameComponent.step == Step.WhiteStep) {
-            Step.BlackStep
+        gameComponent.step = if (gameComponent.step == PlayerColor.White) {
+            PlayerColor.Black
         } else {
-            Step.WhiteStep
+            PlayerColor.White
         }
+    }
+
+    override fun checkingThePlayer(type: PlayerColor): Boolean {
+        return gameComponent.step == type
     }
 }
