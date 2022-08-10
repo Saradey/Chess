@@ -6,7 +6,7 @@ interface ChangeOfMovingController {
 
     fun initLabelMessage(label: Label)
 
-    fun initMoving()
+    fun initMessageMoving()
 
-    fun changeMoving()
+    fun showMessageMoved()
 }

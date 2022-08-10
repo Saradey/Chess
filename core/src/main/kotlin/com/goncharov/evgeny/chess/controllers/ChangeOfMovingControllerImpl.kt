@@ -23,7 +23,7 @@ class ChangeOfMovingControllerImpl(
         this.label = label
     }
 
-    override fun initMoving() {
+    override fun initMessageMoving() {
         if (savedSettingsManager.getFirstMoving() == FIRST_MOVING_WHITE_OPTION) {
             label?.setText(TEXT_WHITE_PLAYER_MOVING)
         } else {
@@ -32,7 +32,7 @@ class ChangeOfMovingControllerImpl(
         showAnimationMessageMoving()
     }
 
-    override fun changeMoving() {
+    override fun showMessageMoved() {
         if (gameComponent.step == Step.WhiteStep) {
             label?.setText(TEXT_WHITE_PLAYER_MOVING)
         } else {

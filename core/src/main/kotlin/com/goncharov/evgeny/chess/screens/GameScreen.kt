@@ -13,6 +13,8 @@ import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.controllers.ChangeOfMovingController
 import com.goncharov.evgeny.chess.controllers.ChangeOfMovingControllerImpl
+import com.goncharov.evgeny.chess.controllers.GameController
+import com.goncharov.evgeny.chess.controllers.GameControllerImpl
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.factory.ChessBoardFactory
 import com.goncharov.evgeny.chess.factory.GameFactory
@@ -45,6 +47,7 @@ class GameScreen(
     private val shapeRenderer = ShapeRenderer()
     private val changeOfMovingController: ChangeOfMovingController =
         ChangeOfMovingControllerImpl(savedSettingsManager, engine)
+    private val gameController: GameController = GameControllerImpl(engine)
 
     override fun show() {
         shapeRenderer.color = Color.RED
@@ -56,7 +59,7 @@ class GameScreen(
         piecesFactory.buildWhitePiecesPlayer()
         piecesFactory.buildBlackPiecesPlayer()
         engine.addSystem(RenderSystem(viewport, batch, shapeRenderer))
-        engine.addSystem(DragAndDropSystem(viewport, changeOfMovingController))
+        engine.addSystem(DragAndDropSystem(viewport, changeOfMovingController, gameController))
     }
 
     override fun render(delta: Float) {
@@ -90,15 +93,15 @@ class GameScreen(
         val button = Button(uiSkin)
         button.addListenerKtx(::clickButtonBack)
         table.add(button)
-            .width(Value.percentWidth(1.5f))
-            .height(Value.percentHeight(1.5f))
+            .width(button.width * 1.5f)
+            .height(button.height * 1.5f)
             .top().padTop(12f).padLeft(12f)
             .prefHeight
         val label = Label("", uiSkin)
         table.add(label).expand().padLeft(-54f)
         stage.addActor(table)
         changeOfMovingController.initLabelMessage(label)
-        changeOfMovingController.initMoving()
+        changeOfMovingController.initMessageMoving()
     }
 
     private fun clickButtonBack() {
