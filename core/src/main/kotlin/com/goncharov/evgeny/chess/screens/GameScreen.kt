@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
+import com.goncharov.evgeny.chess.controllers.ChangeOfMovingController
+import com.goncharov.evgeny.chess.controllers.ChangeOfMovingControllerImpl
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.factory.ChessBoardFactory
 import com.goncharov.evgeny.chess.factory.GameFactory
@@ -42,6 +43,8 @@ class GameScreen(
     private val soundClickButton = assetManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
     private val gameFactory = GameFactory(savedSettingsManager, engine)
     private val shapeRenderer = ShapeRenderer()
+    private val changeOfMovingController: ChangeOfMovingController =
+        ChangeOfMovingControllerImpl(savedSettingsManager, engine)
 
     override fun show() {
         shapeRenderer.color = Color.RED
@@ -93,10 +96,9 @@ class GameScreen(
             .prefHeight
         val label = Label("", uiSkin)
         table.add(label).expand().padLeft(-54f)
-        label.addAction(
-            Actions.alpha(0f)
-        )
         stage.addActor(table)
+        changeOfMovingController.initLabelMessage(label)
+        changeOfMovingController.initMoving()
     }
 
     private fun clickButtonBack() {

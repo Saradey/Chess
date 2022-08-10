@@ -2,6 +2,7 @@ package com.goncharov.evgeny.chess.components.mappers
 
 import com.badlogic.ashley.core.ComponentMapper
 import com.goncharov.evgeny.chess.components.CellComponent
+import com.goncharov.evgeny.chess.components.GameComponent
 import com.goncharov.evgeny.chess.components.PiecesComponent
 import com.goncharov.evgeny.chess.components.SpriteComponent
 
@@ -15,4 +16,8 @@ val pieces: ComponentMapper<PiecesComponent> = ComponentMapper.getFor(
 
 val cells: ComponentMapper<CellComponent> = ComponentMapper.getFor(
     CellComponent::class.java
+)
+
+val game: ComponentMapper<GameComponent> = ComponentMapper.getFor(
+    GameComponent::class.java
 )
