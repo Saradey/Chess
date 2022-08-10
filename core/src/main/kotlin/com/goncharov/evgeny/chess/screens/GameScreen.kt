@@ -56,7 +56,7 @@ class GameScreen(
         piecesFactory.buildWhitePiecesPlayer()
         piecesFactory.buildBlackPiecesPlayer()
         engine.addSystem(RenderSystem(viewport, batch, shapeRenderer))
-        engine.addSystem(DragAndDropSystem(viewport))
+        engine.addSystem(DragAndDropSystem(viewport, changeOfMovingController))
     }
 
     override fun render(delta: Float) {

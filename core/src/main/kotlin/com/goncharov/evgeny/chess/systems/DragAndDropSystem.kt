@@ -11,9 +11,11 @@ import com.goncharov.evgeny.chess.components.mappers.cells
 import com.goncharov.evgeny.chess.components.mappers.pieces
 import com.goncharov.evgeny.chess.components.mappers.sprites
 import com.goncharov.evgeny.chess.consts.*
+import com.goncharov.evgeny.chess.controllers.ChangeOfMovingController
 
 class DragAndDropSystem(
-    private val worldViewport: Viewport
+    private val worldViewport: Viewport,
+    private val changeOfMovingController: ChangeOfMovingController
 ) : EntitySystem() {
 
     private val piecesFamily: Family = Family.all(
@@ -77,6 +79,7 @@ class DragAndDropSystem(
                         }
                     }
                     sprites[entity].sprite.setCenter(resultPosition.x, resultPosition.y)
+                    changeOfMovingController.changeMoving()
                 }
             }
         }
