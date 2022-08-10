@@ -10,10 +10,7 @@ import com.goncharov.evgeny.chess.components.PiecesComponent
 import com.goncharov.evgeny.chess.components.mappers.cells
 import com.goncharov.evgeny.chess.components.mappers.pieces
 import com.goncharov.evgeny.chess.components.mappers.sprites
-import com.goncharov.evgeny.chess.consts.SIZE_SHADOW
-import com.goncharov.evgeny.chess.consts.SPRITE_HEIGHT_WIDTH
-import com.goncharov.evgeny.chess.consts.WORLD_ORIGIN_WIDTH
-import com.goncharov.evgeny.chess.consts.WORlD_ORIGIN_HEIGHT
+import com.goncharov.evgeny.chess.consts.*
 
 class DragAndDropSystem(
     private val worldViewport: Viewport
@@ -32,7 +29,9 @@ class DragAndDropSystem(
             val positionWorld =
                 worldViewport.unproject(Vector2(Gdx.input.x.toFloat(), Gdx.input.y.toFloat()))
             if (positionWorld.x > WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT &&
-                positionWorld.x < SPRITE_HEIGHT_WIDTH * 8 + WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
+                positionWorld.x < SPRITE_HEIGHT_WIDTH * 8 + WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT &&
+                positionWorld.y > SPRITE_HEIGHT_WIDTH / 2 &&
+                positionWorld.y < WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH / 2
             ) {
                 if (entities.all { entity ->
                         !pieces[entity].isDragged
@@ -66,9 +65,11 @@ class DragAndDropSystem(
                         )
                     )
                     pieces[entity].isDragged = false
-                    var tempDst = SPRITE_HEIGHT_WIDTH
-                    val resultPosition = Vector2()
-                    engine.getEntitiesFor(cellsFamily).forEach { cellEntity ->
+                    val cellsList = engine.getEntitiesFor(cellsFamily)
+                    val firstCell = cellsList.first()
+                    var tempDst = cells[firstCell].centrePosition.dst(positionWorld)
+                    val resultPosition = Vector2(cells[firstCell].centrePosition)
+                    cellsList.forEach { cellEntity ->
                         val cellDst = cells[cellEntity].centrePosition.dst(positionWorld)
                         if (cellDst < tempDst) {
                             tempDst = cellDst
