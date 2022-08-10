@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.goncharov.evgeny.chess.components.BackgroundComponent
 import com.goncharov.evgeny.chess.components.CellComponent
@@ -40,7 +41,12 @@ class ChessBoardFactory(
                     y * spriteBoardHeight + heightOffset
                 )
                 val cell = Entity()
-                val cellComponent = CellComponent()
+                val cellComponent = CellComponent(
+                    Vector2(
+                        spriteBoard.x + spriteBoard.width / 2,
+                        spriteBoard.y + spriteBoard.height / 2
+                    )
+                )
                 cell.add(cellComponent)
                 val spriteComponent = SpriteComponent(spriteBoard)
                 cell.add(spriteComponent)

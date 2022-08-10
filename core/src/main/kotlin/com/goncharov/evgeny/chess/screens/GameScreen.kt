@@ -3,7 +3,9 @@ package com.goncharov.evgeny.chess.screens
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.*
@@ -39,8 +41,10 @@ class GameScreen(
     private val piecesFactory = PiecesFactory(engine, savedSettingsManager, assetManager)
     private val soundClickButton = assetManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
     private val gameFactory = GameFactory(savedSettingsManager, engine)
+    private val shapeRenderer = ShapeRenderer()
 
     override fun show() {
+        shapeRenderer.color = Color.RED
         debug(TAG, "show()")
         gameFactory.initialGame()
         initUi()
@@ -48,7 +52,7 @@ class GameScreen(
         chessBoardFactory.addBackground()
         piecesFactory.buildWhitePiecesPlayer()
         piecesFactory.buildBlackPiecesPlayer()
-        engine.addSystem(RenderSystem(viewport, batch))
+        engine.addSystem(RenderSystem(viewport, batch, shapeRenderer))
         engine.addSystem(DragAndDropSystem(viewport))
     }
 
@@ -73,6 +77,7 @@ class GameScreen(
         debug(TAG, "dispose()")
         stage.dispose()
         Gdx.input.inputProcessor = null
+        shapeRenderer.dispose()
     }
 
     private fun initUi() {

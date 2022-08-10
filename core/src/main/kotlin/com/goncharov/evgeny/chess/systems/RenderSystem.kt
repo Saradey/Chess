@@ -2,15 +2,19 @@ package com.goncharov.evgeny.chess.systems
 
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.goncharov.evgeny.chess.components.*
+import com.goncharov.evgeny.chess.components.mappers.cells
 import com.goncharov.evgeny.chess.components.mappers.pieces
 import com.goncharov.evgeny.chess.components.mappers.sprites
 
 class RenderSystem(
     private val viewport: Viewport,
-    private val batch: SpriteBatch
+    private val batch: SpriteBatch,
+    private val shapeRenderer: ShapeRenderer
 ) : EntitySystem() {
 
     init {
@@ -53,5 +57,17 @@ class RenderSystem(
             sprites[entity].sprite.draw(batch)
         }
         batch.end()
+        drawDebug()
+    }
+
+    private fun drawDebug() {
+//        viewport.apply()
+//        shapeRenderer.projectionMatrix = (viewport.camera as OrthographicCamera).combined
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Line)
+//        engine.getEntitiesFor(familyBoardSprite).forEach { entity ->
+//            val position = cells[entity].centrePosition
+//            shapeRenderer.point(position.x, position.y, 0f)
+//        }
+//        shapeRenderer.end()
     }
 }
