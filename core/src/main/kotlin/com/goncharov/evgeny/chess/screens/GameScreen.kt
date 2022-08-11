@@ -41,7 +41,7 @@ class GameScreen(
     private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
     private val chessBoardFactory =
         ChessBoardFactory(engine, savedSettingsManager, uiSkin, assetManager)
-    private val piecesFactory = PiecesFactory(engine, savedSettingsManager, assetManager)
+    private val piecesFactory = PiecesFactory(engine, assetManager)
     private val soundClickButton = assetManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
     private val gameFactory = GameFactory(savedSettingsManager, engine)
     private val shapeRenderer = ShapeRenderer()

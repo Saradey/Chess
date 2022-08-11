@@ -8,11 +8,9 @@ import com.goncharov.evgeny.chess.components.PiecesComponent
 import com.goncharov.evgeny.chess.components.SpriteComponent
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.logic.PlayerColor
-import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 
 class PiecesFactory(
     private val engine: Engine,
-    private val savedSettingsManager: SavedSettingsManager,
     assetManager: AssetManager
 ) {
     private val gameAtlas = assetManager[GAME_ASSET_DESCRIPTOR]
@@ -162,7 +160,14 @@ class PiecesFactory(
             y
         )
         val spriteComponent = SpriteComponent(piecesSprite)
-        val piecesComponent = PiecesComponent(piecesColor = piecesColor)
+        val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
+        val piecesComponent = PiecesComponent(
+            piecesColor = piecesColor,
+            positionBoard = Pair(
+                ((x - widthOffset) / SPRITE_HEIGHT_WIDTH).toInt(),
+                ((y - SIZE_SHADOW) / SPRITE_HEIGHT_WIDTH).toInt()
+            )
+        )
         piecesEntity.add(spriteComponent)
         piecesEntity.add(piecesComponent)
         engine.addEntity(piecesEntity)

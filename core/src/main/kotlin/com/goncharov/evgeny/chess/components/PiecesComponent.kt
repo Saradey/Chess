@@ -5,5 +5,6 @@ import com.goncharov.evgeny.chess.logic.PlayerColor
 
 data class PiecesComponent(
     var isDragged: Boolean = false,
-    val piecesColor: PlayerColor
+    val piecesColor: PlayerColor,
+    var positionBoard: Pair<Int, Int>
 ) : Component

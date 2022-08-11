@@ -36,15 +36,21 @@ class ChessBoardFactory(
                     else -> Sprite(getLightColorBoard())
                 }
                 spriteBoard.setSize(spriteBoardHeight, spriteBoardHeight)
+                val xPosition = x * spriteBoardHeight + widthOffset
+                val yPosition = y * spriteBoardHeight + heightOffset
                 spriteBoard.setPosition(
-                    x * spriteBoardHeight + widthOffset,
-                    y * spriteBoardHeight + heightOffset
+                    xPosition,
+                    yPosition
                 )
                 val cell = Entity()
                 val cellComponent = CellComponent(
                     Vector2(
                         spriteBoard.x + spriteBoard.width / 2,
                         spriteBoard.y + spriteBoard.height / 2
+                    ),
+                    Pair(
+                        ((xPosition - widthOffset) / SPRITE_HEIGHT_WIDTH).toInt(),
+                        ((yPosition - SIZE_SHADOW) / SPRITE_HEIGHT_WIDTH).toInt()
                     )
                 )
                 cell.add(cellComponent)

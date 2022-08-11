@@ -1,7 +1,9 @@
 package com.goncharov.evgeny.chess.systems
 
+import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.core.Family
+import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
@@ -75,19 +77,43 @@ class DragAndDropSystem(
                     val cellsList = engine.getEntitiesFor(cellsFamily)
                     val firstCell = cellsList.first()
                     var tempDst = cells[firstCell].centrePosition.dst(positionWorld)
+                    var resultPositionBoard = cells[firstCell].positionBoard
                     val resultPosition = Vector2(cells[firstCell].centrePosition)
                     cellsList.forEach { cellEntity ->
                         val cellDst = cells[cellEntity].centrePosition.dst(positionWorld)
                         if (cellDst < tempDst) {
                             tempDst = cellDst
+                            resultPositionBoard = cells[cellEntity].positionBoard
                             resultPosition.set(cells[cellEntity].centrePosition)
                         }
                     }
-                    sprites[entity].sprite.setCenter(resultPosition.x, resultPosition.y)
-                    interactorController.turnChanged()
-                    changeOfMovingController.showMessageMoved()
+                    if (!thisIsThePlayersFigure(entities, resultPositionBoard)) {
+                        pieces[entity].positionBoard = resultPositionBoard
+                        sprites[entity].sprite.setCenter(resultPosition.x, resultPosition.y)
+                        interactorController.turnChanged()
+                        changeOfMovingController.showMessageMoved()
+                    } else {
+                        val cellEntity = cellsList.first { cellEntity ->
+                            cells[cellEntity].positionBoard == pieces[entity].positionBoard
+                        }
+                        sprites[entity].sprite.setCenter(
+                            cells[cellEntity].centrePosition.x,
+                            cells[cellEntity].centrePosition.y
+                        )
+                    }
                 }
             }
         }
+    }
+
+    private fun thisIsThePlayersFigure(
+        entities: ImmutableArray<Entity>,
+        positionBoard: Pair<Int, Int>
+    ): Boolean {
+        return entities.find { entity ->
+            pieces[entity].positionBoard == positionBoard
+        }?.let { entity ->
+            interactorController.checkingThePlayer(pieces[entity].piecesColor)
+        } ?: false
     }
 }
