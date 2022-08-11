@@ -77,7 +77,8 @@ class PiecesFactory(
             widthOffset + SPRITE_HEIGHT_WIDTH * 4,
             SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(WHITE_KING_ID)),
-            PlayerColor.White
+            PlayerColor.White,
+            true
         )
     }
 
@@ -143,7 +144,8 @@ class PiecesFactory(
             widthOffset + SPRITE_HEIGHT_WIDTH * 4,
             WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_KING_ID)),
-            PlayerColor.Black
+            PlayerColor.Black,
+            true
         )
     }
 
@@ -151,7 +153,8 @@ class PiecesFactory(
         x: Float,
         y: Float,
         piecesSprite: Sprite,
-        piecesColor: PlayerColor
+        piecesColor: PlayerColor,
+        isKing: Boolean = false
     ) {
         val piecesEntity = Entity()
         piecesSprite.setSize(SPRITE_HEIGHT_WIDTH, SPRITE_HEIGHT_WIDTH)
@@ -166,7 +169,8 @@ class PiecesFactory(
             positionBoard = Pair(
                 ((x - widthOffset) / SPRITE_HEIGHT_WIDTH).toInt(),
                 ((y - SIZE_SHADOW) / SPRITE_HEIGHT_WIDTH).toInt()
-            )
+            ),
+            isKingPieces = isKing
         )
         piecesEntity.add(spriteComponent)
         piecesEntity.add(piecesComponent)

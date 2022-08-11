@@ -4,5 +4,6 @@ import com.badlogic.ashley.core.Component
 import com.goncharov.evgeny.chess.logic.PlayerColor
 
 data class GameComponent(
-    var step: PlayerColor
+    var step: PlayerColor,
+    var isGameOver: Boolean = false
 ) : Component

@@ -11,10 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
-import com.goncharov.evgeny.chess.controllers.ChangeOfMovingController
-import com.goncharov.evgeny.chess.controllers.ChangeOfMovingControllerImpl
-import com.goncharov.evgeny.chess.controllers.GameInteractor
-import com.goncharov.evgeny.chess.controllers.GameInteractorImpl
+import com.goncharov.evgeny.chess.controllers.*
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.factory.ChessBoardFactory
 import com.goncharov.evgeny.chess.factory.GameFactory
@@ -48,6 +45,7 @@ class GameScreen(
     private val changeOfMovingController: ChangeOfMovingController =
         ChangeOfMovingControllerImpl(savedSettingsManager, engine)
     private val gameController: GameInteractor = GameInteractorImpl(engine)
+    private val gameOverController: GameOverController = GameOverControllerImpl(engine)
 
     override fun show() {
         shapeRenderer.color = Color.RED
@@ -59,7 +57,14 @@ class GameScreen(
         piecesFactory.buildWhitePiecesPlayer()
         piecesFactory.buildBlackPiecesPlayer()
         engine.addSystem(RenderSystem(viewport, batch, shapeRenderer))
-        engine.addSystem(DragAndDropSystem(viewport, changeOfMovingController, gameController))
+        engine.addSystem(
+            DragAndDropSystem(
+                viewport,
+                changeOfMovingController,
+                gameController,
+                gameOverController
+            )
+        )
     }
 
     override fun render(delta: Float) {
@@ -102,6 +107,7 @@ class GameScreen(
         stage.addActor(table)
         changeOfMovingController.initLabelMessage(label)
         changeOfMovingController.initMessageMoving()
+        gameOverController.initLabelMessage(label)
     }
 
     private fun clickButtonBack() {

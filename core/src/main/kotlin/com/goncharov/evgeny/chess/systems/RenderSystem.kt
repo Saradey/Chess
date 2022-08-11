@@ -17,10 +17,6 @@ class RenderSystem(
     private val shapeRenderer: ShapeRenderer
 ) : EntitySystem() {
 
-    init {
-//        (viewport.camera as OrthographicCamera).zoom += 2
-    }
-
     private val familyBackgroundSprite = Family.all(
         SpriteComponent::class.java,
         BackgroundComponent::class.java
@@ -57,17 +53,5 @@ class RenderSystem(
             sprites[entity].sprite.draw(batch)
         }
         batch.end()
-        drawDebug()
-    }
-
-    private fun drawDebug() {
-//        viewport.apply()
-//        shapeRenderer.projectionMatrix = (viewport.camera as OrthographicCamera).combined
-//        shapeRenderer.begin(ShapeRenderer.ShapeType.Line)
-//        engine.getEntitiesFor(familyBoardSprite).forEach { entity ->
-//            val position = cells[entity].centrePosition
-//            shapeRenderer.point(position.x, position.y, 0f)
-//        }
-//        shapeRenderer.end()
     }
 }
