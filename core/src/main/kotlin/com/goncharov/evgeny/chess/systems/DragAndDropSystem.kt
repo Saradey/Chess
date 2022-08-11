@@ -87,23 +87,50 @@ class DragAndDropSystem(
                             resultPosition.set(cells[cellEntity].centrePosition)
                         }
                     }
-                    if (!thisIsThePlayersFigure(entities, resultPositionBoard)) {
+                    if (isEmptyBoardPosition(entities, resultPositionBoard)) {
                         pieces[entity].positionBoard = resultPositionBoard
                         sprites[entity].sprite.setCenter(resultPosition.x, resultPosition.y)
                         interactorController.turnChanged()
                         changeOfMovingController.showMessageMoved()
                     } else {
-                        val cellEntity = cellsList.first { cellEntity ->
-                            cells[cellEntity].positionBoard == pieces[entity].positionBoard
+                        if (thisIsThePlayersFigure(entities, resultPositionBoard)) {
+                            val cellEntity = cellsList.first { cellEntity ->
+                                cells[cellEntity].positionBoard == pieces[entity].positionBoard
+                            }
+                            sprites[entity].sprite.setCenter(
+                                cells[cellEntity].centrePosition.x,
+                                cells[cellEntity].centrePosition.y
+                            )
+                        } else {
+                            val entityRemoving = getRemovingPieces(entities, resultPositionBoard)
+                            engine.removeEntity(entityRemoving)
+                            pieces[entity].positionBoard = resultPositionBoard
+                            sprites[entity].sprite.setCenter(resultPosition.x, resultPosition.y)
+                            interactorController.turnChanged()
+                            changeOfMovingController.showMessageMoved()
                         }
-                        sprites[entity].sprite.setCenter(
-                            cells[cellEntity].centrePosition.x,
-                            cells[cellEntity].centrePosition.y
-                        )
                     }
                 }
             }
         }
+    }
+
+    private fun getRemovingPieces(
+        entities: ImmutableArray<Entity>,
+        positionBoard: Pair<Int, Int>
+    ): Entity {
+        return entities.first { entity ->
+            pieces[entity].positionBoard == positionBoard
+        }
+    }
+
+    private fun isEmptyBoardPosition(
+        entities: ImmutableArray<Entity>,
+        positionBoard: Pair<Int, Int>
+    ): Boolean {
+        return entities.any { entity ->
+            pieces[entity].positionBoard == positionBoard
+        }.not()
     }
 
     private fun thisIsThePlayersFigure(
