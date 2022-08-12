@@ -33,6 +33,10 @@ class RenderSystem(
         SpriteComponent::class.java,
         ShadowComponent::class.java
     ).get()
+    private val familyPiecesRemoved = Family.all(
+        SpriteComponent::class.java,
+        RemovedPiecesComponent::class.java
+    ).get()
 
     override fun update(deltaTime: Float) {
         viewport.apply()
@@ -50,6 +54,9 @@ class RenderSystem(
         engine.getEntitiesFor(familyPiecesSprite).sortedBy { entity ->
             pieces[entity].isDragged
         }.forEach { entity ->
+            sprites[entity].sprite.draw(batch)
+        }
+        engine.getEntitiesFor(familyPiecesRemoved).forEach { entity ->
             sprites[entity].sprite.draw(batch)
         }
         batch.end()

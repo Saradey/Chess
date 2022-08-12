@@ -6,14 +6,14 @@ import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.goncharov.evgeny.chess.components.mappers.cells
-import com.goncharov.evgeny.chess.components.mappers.game
-import com.goncharov.evgeny.chess.components.mappers.pieces
-import com.goncharov.evgeny.chess.components.mappers.sprites
+import com.goncharov.evgeny.chess.components.PiecesComponent
+import com.goncharov.evgeny.chess.components.RemovedPiecesComponent
+import com.goncharov.evgeny.chess.components.mappers.*
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.controllers.ChangeOfMovingController
 import com.goncharov.evgeny.chess.controllers.GameInteractor
 import com.goncharov.evgeny.chess.controllers.GameOverController
+import com.goncharov.evgeny.chess.logic.PlayerColor
 
 class DragAndDropSystem(
     private val worldViewport: Viewport,
@@ -103,7 +103,6 @@ class DragAndDropSystem(
                         } else {
                             //remove pieces
                             val entityRemoving = getRemovingPieces(entities, resultPositionBoard)
-                            engine.removeEntity(entityRemoving)
                             pieces[entity].positionBoard = resultPositionBoard
                             sprites[entity].sprite.setCenter(resultPosition.x, resultPosition.y)
                             if (!pieces[entityRemoving].isKingPieces) {
@@ -113,6 +112,36 @@ class DragAndDropSystem(
                                 gameComponent.isGameOver = true
                                 gameOverController.gameOver(pieces[entityRemoving].piecesColor)
                             }
+                            if (pieces[entityRemoving].piecesColor == PlayerColor.White) {
+                                val count = engine.getEntitiesFor(removedPiecesFamily)
+                                    .count { entityRemoved ->
+                                        piecesRemoved[entityRemoved].piecesColor == PlayerColor.White
+                                    } + 1
+                                val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
+                                sprites[entityRemoving].sprite.setPosition(
+                                    if (count < 9) widthOffset + SPRITE_HEIGHT_WIDTH * 8
+                                    else widthOffset + SPRITE_HEIGHT_WIDTH * 9,
+                                    if (count < 9) WORLD_HEIGHT - count * SPRITE_HEIGHT_WIDTH - SIZE_SHADOW
+                                    else WORLD_HEIGHT - (count - 8) * SPRITE_HEIGHT_WIDTH - SIZE_SHADOW
+                                )
+                            } else {
+                                val count = engine.getEntitiesFor(removedPiecesFamily)
+                                    .count { entityRemoved ->
+                                        piecesRemoved[entityRemoved].piecesColor == PlayerColor.Black
+                                    }
+                                val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
+                                sprites[entityRemoving].sprite.setPosition(
+                                    if (count < 8) widthOffset - SPRITE_HEIGHT_WIDTH
+                                    else widthOffset - SPRITE_HEIGHT_WIDTH * 2,
+                                    if (count < 8) count * SPRITE_HEIGHT_WIDTH + SIZE_SHADOW
+                                    else (count - 8) * SPRITE_HEIGHT_WIDTH + SIZE_SHADOW
+                                )
+                            }
+                            val removedPiecesComponent = RemovedPiecesComponent(
+                                pieces[entityRemoving].piecesColor
+                            )
+                            entityRemoving.add(removedPiecesComponent)
+                            entityRemoving.remove(PiecesComponent::class.java)
                         }
                     }
                 }
