@@ -13,7 +13,7 @@ val removedPiecesFamily: Family = Family.all(RemovedPiecesComponent::class.java)
 
 val backgroundFamily: Family = Family.all(BackgroundComponent::class.java).get()
 
-val shadowShadowFamily: Family = Family.all(ShadowComponent::class.java).get()
+val shadowFamily: Family = Family.all(ShadowComponent::class.java).get()
 
 val allPiecesAndCells: Family = Family.all(SpriteComponent::class.java).one(
     PiecesComponent::class.java,
