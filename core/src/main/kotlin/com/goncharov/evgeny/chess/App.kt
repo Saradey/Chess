@@ -5,7 +5,6 @@ import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.goncharov.evgeny.chess.consts.CLICK_BUTTON_SOUND_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.GAME_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.MAIN_MUSIC_DESCRIPTOR
