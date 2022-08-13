@@ -13,6 +13,7 @@ import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.managers.MusicManager
+import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.utils.clearScreen
@@ -21,14 +22,14 @@ import com.goncharov.evgeny.chess.utils.debug
 class MainMenuScreen(
     private val navigator: Navigator,
     batch: SpriteBatch,
-    assetManager: AssetManager,
+    resourceManager: ResourceManager,
     private val musicManager: MusicManager
 ) : BaseScreen() {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
     private val stage = Stage(viewport, batch)
-    private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
-    private val soundClickButton = assetManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
+    private val uiSkin = resourceManager[UI_ASSET_DESCRIPTOR]
+    private val soundClickButton = resourceManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
 
     override fun show() {
         debug(TAG, "show()")

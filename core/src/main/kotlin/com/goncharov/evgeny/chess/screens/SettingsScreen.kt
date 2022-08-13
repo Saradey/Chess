@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport
 import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
+import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.BROWN_BOARD_OPTION
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.FIRST_MOVING_BLACK_OPTION
@@ -23,14 +24,14 @@ import com.goncharov.evgeny.chess.utils.debug
 class SettingsScreen(
     private val navigator: Navigator,
     bach: SpriteBatch,
-    assetManager: AssetManager,
+    resourceManager: ResourceManager,
     private val savedSettingsManager: SavedSettingsManager
 ) : BaseScreen() {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
     private val stage = Stage(viewport, bach)
-    private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
-    private val soundClickButton = assetManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
+    private val uiSkin = resourceManager[UI_ASSET_DESCRIPTOR]
+    private val soundClickButton = resourceManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
     private val colorBoardThemeButtonGroup = ButtonGroup<CheckBox>()
     private val movingPlayerButtonGroup = ButtonGroup<CheckBox>()
 

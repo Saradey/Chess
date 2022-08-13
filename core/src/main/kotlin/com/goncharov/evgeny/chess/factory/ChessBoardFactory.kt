@@ -11,6 +11,7 @@ import com.goncharov.evgeny.chess.components.CellComponent
 import com.goncharov.evgeny.chess.components.ShadowComponent
 import com.goncharov.evgeny.chess.components.SpriteComponent
 import com.goncharov.evgeny.chess.consts.*
+import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.GRAY_BOARD_OPTION
 
@@ -18,9 +19,9 @@ class ChessBoardFactory(
     private val engine: Engine,
     private val savedSettingsManager: SavedSettingsManager,
     private val uiSkin: Skin,
-    assetManager: AssetManager
+    resourceManager: ResourceManager
 ) {
-    private val gameAtlas = assetManager[GAME_ASSET_DESCRIPTOR]
+    private val gameAtlas = resourceManager[GAME_ASSET_DESCRIPTOR]
 
     fun buildChessBoard() {
         val spriteBoardHeight = SPRITE_HEIGHT_WIDTH

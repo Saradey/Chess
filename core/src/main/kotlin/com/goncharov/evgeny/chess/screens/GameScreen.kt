@@ -14,6 +14,7 @@ import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.factory.ChessBoardFactory
 import com.goncharov.evgeny.chess.factory.GameFactory
 import com.goncharov.evgeny.chess.factory.PiecesFactory
+import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
@@ -24,7 +25,7 @@ import com.goncharov.evgeny.chess.utils.debug
 
 class GameScreen(
     private val batch: SpriteBatch,
-    assetManager: AssetManager,
+    resourceManager: ResourceManager,
     savedSettingsManager: SavedSettingsManager,
     private val navigator: Navigator
 ) : BaseScreen() {
@@ -33,11 +34,11 @@ class GameScreen(
     private val hudViewport = FillViewport(UI_WIDTH, UI_HEIGHT)
     private val engine = Engine()
     private val stage = Stage(hudViewport, batch)
-    private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
+    private val uiSkin = resourceManager[UI_ASSET_DESCRIPTOR]
     private val chessBoardFactory =
-        ChessBoardFactory(engine, savedSettingsManager, uiSkin, assetManager)
-    private val piecesFactory = PiecesFactory(engine, assetManager)
-    private val soundClickButton = assetManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
+        ChessBoardFactory(engine, savedSettingsManager, uiSkin, resourceManager)
+    private val piecesFactory = PiecesFactory(engine, resourceManager)
+    private val soundClickButton = resourceManager[CLICK_BUTTON_SOUND_DESCRIPTOR]
     private val gameFactory = GameFactory(savedSettingsManager, engine)
     private val changeOfMovingController: ChangeOfMovingController =
         ChangeOfMovingControllerImpl(savedSettingsManager, engine)

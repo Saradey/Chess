@@ -2,18 +2,18 @@ package com.goncharov.evgeny.chess.factory
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.goncharov.evgeny.chess.components.PiecesComponent
 import com.goncharov.evgeny.chess.components.SpriteComponent
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.logic.PlayerColor
+import com.goncharov.evgeny.chess.managers.ResourceManager
 
 class PiecesFactory(
     private val engine: Engine,
-    assetManager: AssetManager
+    resourceManager: ResourceManager
 ) {
-    private val gameAtlas = assetManager[GAME_ASSET_DESCRIPTOR]
+    private val gameAtlas = resourceManager[GAME_ASSET_DESCRIPTOR]
 
     fun buildWhitePiecesPlayer() {
         val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT

@@ -1,6 +1,5 @@
 package com.goncharov.evgeny.chess.screens
 
-import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
@@ -13,6 +12,7 @@ import com.goncharov.evgeny.chess.consts.TEXT_LOGO
 import com.goncharov.evgeny.chess.consts.UI_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.UI_HEIGHT
 import com.goncharov.evgeny.chess.consts.UI_WIDTH
+import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.utils.clearScreen
@@ -21,12 +21,12 @@ import com.goncharov.evgeny.chess.utils.debug
 class SplashScreen(
     private val navigator: Navigator,
     bach: SpriteBatch,
-    assetManager: AssetManager
+    resourceManager: ResourceManager
 ) : BaseScreen() {
 
     private val viewPort = FillViewport(UI_WIDTH, UI_HEIGHT)
     private val stage = Stage(viewPort, bach)
-    private val uiSkin = assetManager[UI_ASSET_DESCRIPTOR]
+    private val uiSkin = resourceManager[UI_ASSET_DESCRIPTOR]
 
     override fun show() {
         debug(TAG, "show()")

@@ -5,11 +5,9 @@ import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.goncharov.evgeny.chess.consts.CLICK_BUTTON_SOUND_DESCRIPTOR
-import com.goncharov.evgeny.chess.consts.GAME_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.consts.MAIN_MUSIC_DESCRIPTOR
-import com.goncharov.evgeny.chess.consts.UI_ASSET_DESCRIPTOR
 import com.goncharov.evgeny.chess.managers.MusicManager
+import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
@@ -24,18 +22,16 @@ class App : Game(), Navigator {
     private val batch by lazy {
         SpriteBatch()
     }
-    private val assetManager = AssetManager()
-    private val musicManager = MusicManager(assetManager)
     private val savedSettingsManager = SavedSettingsManager()
+    private val resourceManager = ResourceManager(AssetManager())
+    private val musicManager by lazy {
+        MusicManager(resourceManager[MAIN_MUSIC_DESCRIPTOR])
+    }
 
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
         debug(TAG, "start application")
-        assetManager.load(GAME_ASSET_DESCRIPTOR)
-        assetManager.load(UI_ASSET_DESCRIPTOR)
-        assetManager.load(CLICK_BUTTON_SOUND_DESCRIPTOR)
-        assetManager.load(MAIN_MUSIC_DESCRIPTOR)
-        assetManager.finishLoading()
+        resourceManager.loadAllResources()
         navigation(NavigationKey.SplashScreenKey)
     }
 
@@ -43,21 +39,21 @@ class App : Game(), Navigator {
         debug(TAG, "navigation ${key::class.java.simpleName}")
         when (key) {
             NavigationKey.SplashScreenKey -> setScreen(
-                SplashScreen(this, batch, assetManager)
+                SplashScreen(this, batch, resourceManager)
             )
             NavigationKey.MainMenuScreenKey -> setScreen(
-                MainMenuScreen(this, batch, assetManager, musicManager)
+                MainMenuScreen(this, batch, resourceManager, musicManager)
             )
             NavigationKey.GameScreenKey -> setScreen(
                 GameScreen(
                     batch,
-                    assetManager,
+                    resourceManager,
                     savedSettingsManager,
                     this
                 )
             )
             NavigationKey.SettingScreenKey -> setScreen(
-                SettingsScreen(this, batch, assetManager, savedSettingsManager)
+                SettingsScreen(this, batch, resourceManager, savedSettingsManager)
             )
         }
     }
@@ -65,7 +61,7 @@ class App : Game(), Navigator {
     override fun dispose() {
         debug(TAG, "dispose")
         batch.dispose()
-        assetManager.dispose()
+        resourceManager.disposeAllResources()
     }
 
     companion object {
