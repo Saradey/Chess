@@ -1,4 +1,4 @@
-package com.goncharov.evgeny.chess.controllers
+package com.goncharov.evgeny.chess.interactors
 
 import com.goncharov.evgeny.chess.logic.PlayerColor
 

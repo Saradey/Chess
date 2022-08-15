@@ -10,6 +10,8 @@ import com.goncharov.evgeny.chess.controllers.*
 import com.goncharov.evgeny.chess.factory.ChessBoardFactory
 import com.goncharov.evgeny.chess.factory.GameFactory
 import com.goncharov.evgeny.chess.factory.PiecesFactory
+import com.goncharov.evgeny.chess.interactors.GameInteractor
+import com.goncharov.evgeny.chess.interactors.GameInteractorImpl
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
