@@ -32,9 +32,9 @@ class DragAndDropSystem(
             val positionWorld =
                 worldViewport.unproject(Vector2(Gdx.input.x.toFloat(), Gdx.input.y.toFloat()))
             if (positionWorld.x > WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT &&
-                positionWorld.x < SPRITE_HEIGHT_WIDTH * 8 + WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT &&
-                positionWorld.y > SPRITE_HEIGHT_WIDTH / 2 &&
-                positionWorld.y < WORLD_HEIGHT - SPRITE_HEIGHT_WIDTH / 2
+                positionWorld.x < SPRITE_SIZE * 8 + WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT &&
+                positionWorld.y > SPRITE_SIZE / 2 &&
+                positionWorld.y < WORLD_HEIGHT - SPRITE_SIZE / 2
             ) {
                 if (entities.all { entity ->
                         !pieces[entity].isDragged
@@ -119,10 +119,10 @@ class DragAndDropSystem(
                                     } + 1
                                 val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
                                 sprites[entityRemoving].sprite.setPosition(
-                                    if (count < 9) widthOffset + SPRITE_HEIGHT_WIDTH * 8
-                                    else widthOffset + SPRITE_HEIGHT_WIDTH * 9,
-                                    if (count < 9) WORLD_HEIGHT - count * SPRITE_HEIGHT_WIDTH - SIZE_SHADOW
-                                    else WORLD_HEIGHT - (count - 8) * SPRITE_HEIGHT_WIDTH - SIZE_SHADOW
+                                    if (count < 9) widthOffset + SPRITE_SIZE * 8
+                                    else widthOffset + SPRITE_SIZE * 9,
+                                    if (count < 9) WORLD_HEIGHT - count * SPRITE_SIZE - SIZE_SHADOW
+                                    else WORLD_HEIGHT - (count - 8) * SPRITE_SIZE - SIZE_SHADOW
                                 )
                             } else {
                                 val count = engine.getEntitiesFor(removedPiecesFamily)
@@ -131,10 +131,10 @@ class DragAndDropSystem(
                                     }
                                 val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
                                 sprites[entityRemoving].sprite.setPosition(
-                                    if (count < 8) widthOffset - SPRITE_HEIGHT_WIDTH
-                                    else widthOffset - SPRITE_HEIGHT_WIDTH * 2,
-                                    if (count < 8) count * SPRITE_HEIGHT_WIDTH + SIZE_SHADOW
-                                    else (count - 8) * SPRITE_HEIGHT_WIDTH + SIZE_SHADOW
+                                    if (count < 8) widthOffset - SPRITE_SIZE
+                                    else widthOffset - SPRITE_SIZE * 2,
+                                    if (count < 8) count * SPRITE_SIZE + SIZE_SHADOW
+                                    else (count - 8) * SPRITE_SIZE + SIZE_SHADOW
                                 )
                             }
                             val removedPiecesComponent = RemovedPiecesComponent(
