@@ -11,11 +11,3 @@ inline fun Actor.addListenerKtx(crossinline action: () -> Unit) {
         }
     })
 }
-
-var Pair<Int, Int>.x: Int
-    get() = this.first
-    set(value) {}
-
-var Pair<Int, Int>.y: Int
-    get() = this.second
-    set(value) {}

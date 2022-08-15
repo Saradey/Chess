@@ -10,8 +10,6 @@ import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.interactors.SettingsInteractor
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
-import com.goncharov.evgeny.chess.navigation.NavigationKey
-import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.screens.settings.SettingsScreen
 
 class SettingsStageImpl(

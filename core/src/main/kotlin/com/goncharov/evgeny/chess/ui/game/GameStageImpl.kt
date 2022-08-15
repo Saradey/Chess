@@ -15,8 +15,6 @@ import com.goncharov.evgeny.chess.consts.UI_HEIGHT
 import com.goncharov.evgeny.chess.consts.UI_WIDTH
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.managers.ResourceManager
-import com.goncharov.evgeny.chess.navigation.NavigationKey
-import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.screens.game.GameScreen
 
 class GameStageImpl(

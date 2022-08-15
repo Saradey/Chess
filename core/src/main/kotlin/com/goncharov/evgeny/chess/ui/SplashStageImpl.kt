@@ -9,8 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.goncharov.evgeny.chess.consts.TEXT_LOGO
-import com.goncharov.evgeny.chess.navigation.NavigationKey
-import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.screens.splash.SplashScreen
 
 class SplashStageImpl(

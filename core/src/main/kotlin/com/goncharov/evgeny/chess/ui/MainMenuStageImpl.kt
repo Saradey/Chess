@@ -9,8 +9,6 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.managers.ResourceManager
-import com.goncharov.evgeny.chess.navigation.NavigationKey
-import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.screens.main.menu.MainMenuScreen
 
 class MainMenuStageImpl(
