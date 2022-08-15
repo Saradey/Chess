@@ -6,31 +6,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.goncharov.evgeny.chess.components.mappers.sprites
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.logic.PlayerColor
+import com.goncharov.evgeny.chess.ui.game.GameStage
 
 class GameOverControllerImpl(
-    private val engine: Engine
+    private val engine: Engine,
+    private val gameStage: GameStage
 ) : GameOverController {
-
-    private var messageLabel: Label? = null
 
     override fun gameOver(removeColor: PlayerColor) {
         engine.getEntitiesFor(allPiecesAndCells).forEach { cell ->
             sprites[cell].sprite.setAlpha(0.5f)
         }
         if (removeColor == PlayerColor.White) {
-            messageLabel?.setText(TEXT_GAME_OVER_BLACK_WIN)
+            gameStage.showEndGame(TEXT_GAME_OVER_BLACK_WIN)
         } else {
-            messageLabel?.setText(TEXT_GAME_OVER_WHITE_WIN)
+            gameStage.showEndGame(TEXT_GAME_OVER_WHITE_WIN)
         }
-        messageLabel?.addAction(
-            Actions.sequence(
-                Actions.alpha(0f),
-                Actions.fadeIn(1f)
-            )
-        )
-    }
-
-    override fun initLabelMessage(label: Label) {
-        messageLabel = label
     }
 }

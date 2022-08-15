@@ -5,7 +5,5 @@ import com.goncharov.evgeny.chess.logic.PlayerColor
 
 interface GameOverController {
 
-    fun gameOver(removeColor : PlayerColor)
-
-    fun initLabelMessage(label: Label)
+    fun gameOver(removeColor: PlayerColor)
 }

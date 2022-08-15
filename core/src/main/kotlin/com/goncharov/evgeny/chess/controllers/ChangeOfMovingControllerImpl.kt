@@ -1,72 +1,40 @@
 package com.goncharov.evgeny.chess.controllers
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.goncharov.evgeny.chess.components.mappers.game
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.logic.PlayerColor
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager.Companion.FIRST_MOVING_WHITE_OPTION
+import com.goncharov.evgeny.chess.ui.game.GameStage
 
 class ChangeOfMovingControllerImpl(
+    private val gameStage: GameStage,
     private val savedSettingsManager: SavedSettingsManager,
     engine: Engine
 ) : ChangeOfMovingController {
 
-    private var label: Label? = null
     private val gameComponent by lazy {
         game[engine.getEntitiesFor(gameFamily).first()]
     }
 
-    override fun initLabelMessage(label: Label) {
-        this.label = label
-    }
-
     override fun initMessageMoving() {
-        if (savedSettingsManager.getFirstMoving() == FIRST_MOVING_WHITE_OPTION) {
-            label?.setText(TEXT_WHITE_PLAYER_MOVING)
-        } else {
-            label?.setText(TEXT_BLACK_PLAYER_MOVING)
-        }
-        showAnimationMessageMoving()
+        val messageMoving =
+            if (savedSettingsManager.getFirstMoving() == FIRST_MOVING_WHITE_OPTION) {
+                TEXT_WHITE_PLAYER_MOVING
+            } else {
+                TEXT_BLACK_PLAYER_MOVING
+            }
+        gameStage.showMessage(messageMoving)
     }
 
     override fun showMessageMoved() {
-        if (gameComponent.step == PlayerColor.White) {
-            label?.setText(TEXT_WHITE_PLAYER_MOVING)
+        val messageMoving = if (gameComponent.step == PlayerColor.White) {
+            TEXT_WHITE_PLAYER_MOVING
         } else {
-            label?.setText(TEXT_BLACK_PLAYER_MOVING)
+            TEXT_BLACK_PLAYER_MOVING
         }
-        showAnimationMessageMoving()
-    }
-
-    private fun showAnimationMessageMoving() {
-        label?.addAction(
-            Actions.sequence(
-                Actions.alpha(0f),
-                Actions.fadeIn(1f),
-                Actions.fadeOut(1f)
-            )
-        )
-        label?.addAction(
-            Actions.sequence(
-                Actions.moveTo(
-                    X_MOVE_START_POSITION,
-                    Y_MOVE_START_POSITION
-                ),
-                Actions.moveTo(
-                    X_MOVE_START_POSITION,
-                    Y_MOVE_POSITION,
-                    2f
-                )
-            )
-        )
-    }
-
-    companion object {
-        private const val X_MOVE_START_POSITION = UI_WIDTH / 2f - 109f
-        private const val Y_MOVE_START_POSITION = UI_HEIGHT / 2f - 10f
-        private const val Y_MOVE_POSITION = UI_HEIGHT / 2f + 10f
+        gameStage.showMessage(messageMoving)
     }
 }
