@@ -9,7 +9,7 @@ import com.goncharov.evgeny.chess.interactors.SettingsInteractorImpl
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.Navigator
-import com.goncharov.evgeny.chess.ui.SettingsStage
+import com.goncharov.evgeny.chess.ui.SettingsStageImpl
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
 
@@ -21,7 +21,7 @@ class SettingsScreen(
 ) : BaseScreen() {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
-    private val stage = SettingsStage(
+    private val stage = SettingsStageImpl(
         viewport,
         bach,
         resourceManager,

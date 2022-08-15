@@ -13,7 +13,7 @@ import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 
-class SettingsStage(
+class SettingsStageImpl(
     viewport: Viewport,
     bach: SpriteBatch,
     resourceManager: ResourceManager,

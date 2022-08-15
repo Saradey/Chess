@@ -8,7 +8,7 @@ import com.goncharov.evgeny.chess.consts.UI_HEIGHT
 import com.goncharov.evgeny.chess.consts.UI_WIDTH
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.navigation.Navigator
-import com.goncharov.evgeny.chess.ui.SplashStage
+import com.goncharov.evgeny.chess.ui.SplashStageImpl
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
 
@@ -19,7 +19,7 @@ class SplashScreen(
 ) : BaseScreen() {
 
     private val viewPort = FillViewport(UI_WIDTH, UI_HEIGHT)
-    private val stage = SplashStage(
+    private val stage = SplashStageImpl(
         navigator,
         resourceManager[UI_ASSET_DESCRIPTOR],
         bach,

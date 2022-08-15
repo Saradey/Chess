@@ -12,7 +12,7 @@ import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 
-class MainMenuStage(
+class MainMenuStageImpl(
     viewport: Viewport,
     batch: SpriteBatch,
     resourceManager: ResourceManager,

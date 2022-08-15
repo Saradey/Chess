@@ -8,7 +8,7 @@ import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.managers.MusicManager
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.navigation.Navigator
-import com.goncharov.evgeny.chess.ui.MainMenuStage
+import com.goncharov.evgeny.chess.ui.MainMenuStageImpl
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
 
@@ -20,7 +20,7 @@ class MainMenuScreen(
 ) : BaseScreen() {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
-    private val stage = MainMenuStage(
+    private val stage = MainMenuStageImpl(
         viewport,
         batch,
         resourceManager,

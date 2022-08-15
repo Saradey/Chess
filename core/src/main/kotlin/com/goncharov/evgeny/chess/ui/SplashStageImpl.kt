@@ -12,7 +12,7 @@ import com.goncharov.evgeny.chess.consts.TEXT_LOGO
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 
-class SplashStage(
+class SplashStageImpl(
     private val navigator: Navigator,
     private val uiSkin: Skin,
     bach: SpriteBatch,
