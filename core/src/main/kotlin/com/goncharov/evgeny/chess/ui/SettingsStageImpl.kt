@@ -12,12 +12,13 @@ import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
+import com.goncharov.evgeny.chess.screens.settings.SettingsScreen
 
 class SettingsStageImpl(
     viewport: Viewport,
     bach: SpriteBatch,
     resourceManager: ResourceManager,
-    private val navigator: Navigator,
+    private val settingsScreen: SettingsScreen,
     private val uiSkin: Skin,
     private val settingsInteractor: SettingsInteractor
 ) : Stage(viewport, bach) {
@@ -168,7 +169,7 @@ class SettingsStageImpl(
 
     private fun clickBack() {
         soundClickButton.play()
-        navigator.navigation(NavigationKey.MainMenuScreenKey)
+        settingsScreen.goToTheMainMenu()
     }
 
     private fun changeBoardTheme() {

@@ -1,35 +1,35 @@
-package com.goncharov.evgeny.chess.screens
+package com.goncharov.evgeny.chess.screens.settings
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
-import com.goncharov.evgeny.chess.managers.MusicManager
+import com.goncharov.evgeny.chess.interactors.SettingsInteractorImpl
 import com.goncharov.evgeny.chess.managers.ResourceManager
+import com.goncharov.evgeny.chess.managers.SavedSettingsManager
+import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
-import com.goncharov.evgeny.chess.ui.MainMenuStageImpl
+import com.goncharov.evgeny.chess.ui.SettingsStageImpl
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
 
-class MainMenuScreen(
-    navigator: Navigator,
-    batch: SpriteBatch,
+class SettingsScreenImpl(
+    private val navigator: Navigator,
+    bach: SpriteBatch,
     resourceManager: ResourceManager,
-    musicManager: MusicManager
-) : BaseScreen() {
+    savedSettingsManager: SavedSettingsManager
+) : BaseScreen(), SettingsScreen {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
-    private val stage = MainMenuStageImpl(
+    private val stage = SettingsStageImpl(
         viewport,
-        batch,
+        bach,
         resourceManager,
-        navigator
+        this,
+        resourceManager[UI_ASSET_DESCRIPTOR],
+        SettingsInteractorImpl(savedSettingsManager)
     )
-
-    init {
-        musicManager.startMainMusic()
-    }
 
     override fun show() {
         debug(TAG, "show()")
@@ -57,7 +57,11 @@ class MainMenuScreen(
         stage.dispose()
     }
 
+    override fun goToTheMainMenu() {
+        navigator.navigation(NavigationKey.MainMenuScreenKey)
+    }
+
     companion object {
-        private const val TAG = "MainMenuScreen"
+        private const val TAG = "SettingsScreen"
     }
 }

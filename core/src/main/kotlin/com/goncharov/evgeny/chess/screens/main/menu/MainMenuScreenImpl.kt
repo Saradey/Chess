@@ -1,34 +1,36 @@
-package com.goncharov.evgeny.chess.screens
+package com.goncharov.evgeny.chess.screens.main.menu
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
-import com.goncharov.evgeny.chess.interactors.SettingsInteractorImpl
+import com.goncharov.evgeny.chess.managers.MusicManager
 import com.goncharov.evgeny.chess.managers.ResourceManager
-import com.goncharov.evgeny.chess.managers.SavedSettingsManager
+import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
-import com.goncharov.evgeny.chess.ui.SettingsStageImpl
+import com.goncharov.evgeny.chess.ui.MainMenuStageImpl
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
 
-class SettingsScreen(
-    navigator: Navigator,
-    bach: SpriteBatch,
+class MainMenuScreenImpl(
+    private val navigator: Navigator,
+    batch: SpriteBatch,
     resourceManager: ResourceManager,
-    savedSettingsManager: SavedSettingsManager
-) : BaseScreen() {
+    musicManager: MusicManager
+) : BaseScreen(), MainMenuScreen {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
-    private val stage = SettingsStageImpl(
+    private val stage = MainMenuStageImpl(
         viewport,
-        bach,
+        batch,
         resourceManager,
-        navigator,
-        resourceManager[UI_ASSET_DESCRIPTOR],
-        SettingsInteractorImpl(savedSettingsManager)
+        this
     )
+
+    init {
+        musicManager.startMainMusic()
+    }
 
     override fun show() {
         debug(TAG, "show()")
@@ -56,7 +58,15 @@ class SettingsScreen(
         stage.dispose()
     }
 
+    override fun goToTheGameScreen() {
+        navigator.navigation(NavigationKey.GameScreenKey)
+    }
+
+    override fun goToTheSettingsScreen() {
+        navigator.navigation(NavigationKey.SettingScreenKey)
+    }
+
     companion object {
-        private const val TAG = "SettingsScreen"
+        private const val TAG = "MainMenuScreen"
     }
 }

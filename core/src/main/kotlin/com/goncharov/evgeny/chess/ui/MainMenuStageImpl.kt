@@ -11,12 +11,13 @@ import com.goncharov.evgeny.chess.extensions.addListenerKtx
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
+import com.goncharov.evgeny.chess.screens.main.menu.MainMenuScreen
 
 class MainMenuStageImpl(
     viewport: Viewport,
     batch: SpriteBatch,
     resourceManager: ResourceManager,
-    private val navigator: Navigator
+    private val mainMenuScreen: MainMenuScreen
 ) : Stage(viewport, batch) {
 
     private val uiSkin: Skin = resourceManager[UI_ASSET_DESCRIPTOR]
@@ -90,12 +91,13 @@ class MainMenuStageImpl(
 
     private fun startPlayerVsPlayerGame() {
         soundClickButton.play()
-        navigator.navigation(NavigationKey.GameScreenKey)
+        mainMenuScreen.goToTheGameScreen()
+
     }
 
     private fun startSettings() {
         soundClickButton.play()
-        navigator.navigation(NavigationKey.SettingScreenKey)
+        mainMenuScreen.goToTheSettingsScreen()
     }
 
     private fun exitApplication() {

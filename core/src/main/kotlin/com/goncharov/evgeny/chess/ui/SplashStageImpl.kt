@@ -11,12 +11,13 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.goncharov.evgeny.chess.consts.TEXT_LOGO
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
+import com.goncharov.evgeny.chess.screens.splash.SplashScreen
 
 class SplashStageImpl(
-    private val navigator: Navigator,
     private val uiSkin: Skin,
     bach: SpriteBatch,
-    viewport: Viewport
+    viewport: Viewport,
+    private val splashScreen: SplashScreen
 ) : Stage(viewport, bach) {
 
     private var labelLogo: Label? = null
@@ -42,7 +43,7 @@ class SplashStageImpl(
                 Actions.fadeIn(1f),
                 Actions.fadeOut(1f),
                 Actions.run {
-                    navigator.navigation(NavigationKey.MainMenuScreenKey)
+                    splashScreen.goToTheMainMenu()
                 }
             )
         )

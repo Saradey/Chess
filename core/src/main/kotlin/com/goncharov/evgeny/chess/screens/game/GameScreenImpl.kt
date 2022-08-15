@@ -1,4 +1,4 @@
-package com.goncharov.evgeny.chess.screens
+package com.goncharov.evgeny.chess.screens.game
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
@@ -12,6 +12,7 @@ import com.goncharov.evgeny.chess.factory.GameFactory
 import com.goncharov.evgeny.chess.factory.PiecesFactory
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
+import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.systems.DragAndDropSystem
 import com.goncharov.evgeny.chess.systems.RenderSystem
@@ -19,12 +20,12 @@ import com.goncharov.evgeny.chess.ui.game.GameStageImpl
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
 
-class GameScreen(
+class GameScreenImpl(
     private val batch: SpriteBatch,
     resourceManager: ResourceManager,
     savedSettingsManager: SavedSettingsManager,
-    navigator: Navigator
-) : BaseScreen() {
+    private val navigator: Navigator
+) : BaseScreen(), GameScreen {
 
     private val viewport = FillViewport(WORLD_WIDTH, WORLD_HEIGHT)
     private val hudViewport = FillViewport(UI_WIDTH, UI_HEIGHT)
@@ -32,7 +33,7 @@ class GameScreen(
         batch,
         hudViewport,
         resourceManager,
-        navigator
+        this
     )
     private val engine = Engine()
     private val chessBoardFactory =
@@ -93,6 +94,10 @@ class GameScreen(
         debug(TAG, "dispose()")
         gameStage.dispose()
         Gdx.input.inputProcessor = null
+    }
+
+    override fun goToTheMainMenu() {
+        navigator.navigation(NavigationKey.MainMenuScreenKey)
     }
 
     companion object {

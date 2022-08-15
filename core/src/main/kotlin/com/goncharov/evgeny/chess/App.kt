@@ -11,10 +11,10 @@ import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
-import com.goncharov.evgeny.chess.screens.GameScreen
-import com.goncharov.evgeny.chess.screens.MainMenuScreen
-import com.goncharov.evgeny.chess.screens.SettingsScreen
-import com.goncharov.evgeny.chess.screens.SplashScreen
+import com.goncharov.evgeny.chess.screens.game.GameScreenImpl
+import com.goncharov.evgeny.chess.screens.main.menu.MainMenuScreenImpl
+import com.goncharov.evgeny.chess.screens.settings.SettingsScreenImpl
+import com.goncharov.evgeny.chess.screens.splash.SplashScreenImpl
 import com.goncharov.evgeny.chess.utils.debug
 
 class App : Game(), Navigator {
@@ -39,13 +39,13 @@ class App : Game(), Navigator {
         debug(TAG, "navigation ${key::class.java.simpleName}")
         when (key) {
             NavigationKey.SplashScreenKey -> setScreen(
-                SplashScreen(this, batch, resourceManager)
+                SplashScreenImpl(this, batch, resourceManager)
             )
             NavigationKey.MainMenuScreenKey -> setScreen(
-                MainMenuScreen(this, batch, resourceManager, musicManager)
+                MainMenuScreenImpl(this, batch, resourceManager, musicManager)
             )
             NavigationKey.GameScreenKey -> setScreen(
-                GameScreen(
+                GameScreenImpl(
                     batch,
                     resourceManager,
                     savedSettingsManager,
@@ -53,7 +53,7 @@ class App : Game(), Navigator {
                 )
             )
             NavigationKey.SettingScreenKey -> setScreen(
-                SettingsScreen(this, batch, resourceManager, savedSettingsManager)
+                SettingsScreenImpl(this, batch, resourceManager, savedSettingsManager)
             )
         }
     }
