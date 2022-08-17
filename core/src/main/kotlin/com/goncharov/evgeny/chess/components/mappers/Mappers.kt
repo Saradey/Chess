@@ -22,3 +22,7 @@ val cells: ComponentMapper<CellComponent> = ComponentMapper.getFor(
 val game: ComponentMapper<GameComponent> = ComponentMapper.getFor(
     GameComponent::class.java
 )
+
+val layers: ComponentMapper<LayerComponent> = ComponentMapper.getFor(
+    LayerComponent::class.java
+)

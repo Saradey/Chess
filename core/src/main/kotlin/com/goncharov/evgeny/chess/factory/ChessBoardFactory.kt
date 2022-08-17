@@ -5,10 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
-import com.goncharov.evgeny.chess.components.BackgroundComponent
-import com.goncharov.evgeny.chess.components.CellComponent
-import com.goncharov.evgeny.chess.components.ShadowComponent
-import com.goncharov.evgeny.chess.components.SpriteComponent
+import com.goncharov.evgeny.chess.components.*
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
@@ -41,7 +38,7 @@ class ChessBoardFactory(
                     xPosition,
                     yPosition
                 )
-                val cell = Entity()
+                val cellEntity = Entity()
                 val cellComponent = CellComponent(
                     Vector2(
                         spriteBoard.x + spriteBoard.width / 2,
@@ -52,10 +49,12 @@ class ChessBoardFactory(
                         ((yPosition - SIZE_SHADOW) / SPRITE_SIZE).toInt()
                     )
                 )
-                cell.add(cellComponent)
+                cellEntity.add(cellComponent)
                 val spriteComponent = SpriteComponent(spriteBoard)
-                cell.add(spriteComponent)
-                engine.addEntity(cell)
+                val layerComponent = LayerComponent(SPRITE_LAYER_2)
+                cellEntity.add(spriteComponent)
+                cellEntity.add(layerComponent)
+                engine.addEntity(cellEntity)
             }
         }
         addShadow(
@@ -92,8 +91,10 @@ class ChessBoardFactory(
             }
         )
         val backgroundComponent = BackgroundComponent()
+        val layerComponent = LayerComponent(SPRITE_LAYER_1)
         backgroundEntity.add(spriteComponent)
         backgroundEntity.add(backgroundComponent)
+        backgroundEntity.add(layerComponent)
         engine.addEntity(backgroundEntity)
     }
 
@@ -118,6 +119,8 @@ class ChessBoardFactory(
         spriteShadow.rotation = rotate
         val spriteComponent = SpriteComponent(spriteShadow)
         shadowEntity.add(spriteComponent)
+        val layerComponent = LayerComponent(SPRITE_LAYER_2)
+        shadowEntity.add(layerComponent)
         engine.addEntity(shadowEntity)
     }
 
