@@ -26,3 +26,7 @@ val game: ComponentMapper<GameComponent> = ComponentMapper.getFor(
 val layers: ComponentMapper<LayerComponent> = ComponentMapper.getFor(
     LayerComponent::class.java
 )
+
+val dragged: ComponentMapper<DraggedComponent> = ComponentMapper.getFor(
+    DraggedComponent::class.java
+)

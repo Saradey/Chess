@@ -67,7 +67,6 @@ class DragAndDropSystem(
                         Gdx.input.y.toFloat()
                     )
                 )
-                draggedEntity?.remove(DraggedComponent::class.java)
                 val cellsList = engine.getEntitiesFor(cellsFamily)
                 val firstCell = cellsList.first()
                 var tempDst = cells[firstCell].centrePosition.dst(positionWorld)
@@ -142,9 +141,10 @@ class DragAndDropSystem(
                         entityRemoving.remove(PiecesComponent::class.java)
                     }
                 }
+                draggedEntity = null
+                draggedComponent.isDragged = false
+                draggedEntity?.remove(DraggedComponent::class.java)
             }
-            draggedEntity = null
-            draggedComponent.isDragged = false
         }
     }
 
