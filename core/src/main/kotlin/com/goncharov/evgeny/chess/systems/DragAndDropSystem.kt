@@ -23,15 +23,14 @@ class DragAndDropSystem(
     private val gameOverController: GameOverController
 ) : EntitySystem() {
 
-    private val gameComponent by lazy {
-        game[engine.getEntitiesFor(gameFamily).first()]
+    private val gameEntity by lazy {
+        engine.getEntitiesFor(gameFamily).first()
     }
-    private val draggedComponent = DraggedComponent()
     private var draggedEntity: Entity? = null
 
     override fun update(deltaTime: Float) {
         val entities = engine.getEntitiesFor(piecesFamily)
-        if (Gdx.input.isTouched && !gameComponent.isGameOver) {
+        if (Gdx.input.isTouched && !game[gameEntity].isGameOver) {
             val positionWorld =
                 worldViewport.unproject(Vector2(Gdx.input.x.toFloat(), Gdx.input.y.toFloat()))
             if (positionWorld.x > WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT &&
@@ -39,14 +38,14 @@ class DragAndDropSystem(
                 positionWorld.y > SPRITE_SIZE / 2 &&
                 positionWorld.y < WORLD_HEIGHT - SPRITE_SIZE / 2
             ) {
-                if (!draggedComponent.isDragged) {
+                if (!dragged[gameEntity].isDragged) {
                     entities.forEach { entity ->
                         val sprite = sprites[entity].sprite
                         if (sprite.boundingRectangle.contains(positionWorld) &&
                             interactorController.checkingThePlayer(pieces[entity].piecesColor)
                         ) {
-                            draggedComponent.isDragged = true
-                            entity.add(draggedComponent)
+                            dragged[gameEntity].isDragged = true
+                            entity.add(dragged[gameEntity])
                             draggedEntity = entity
                             layers[draggedEntity].layer = DRAGGED_LAYER_4
                             return@forEach
@@ -61,7 +60,7 @@ class DragAndDropSystem(
                 }
             }
         } else {
-            if (draggedComponent.isDragged && draggedEntity != null) {
+            if (dragged[gameEntity].isDragged && draggedEntity != null) {
                 val positionWorld = worldViewport.unproject(
                     Vector2(
                         Gdx.input.x.toFloat(),
@@ -107,7 +106,7 @@ class DragAndDropSystem(
                             interactorController.turnChanged()
                             changeOfMovingController.showMessageMoved()
                         } else {
-                            gameComponent.isGameOver = true
+                            game[gameEntity].isGameOver = true
                             gameOverController.gameOver(pieces[entityRemoving].piecesColor)
                         }
                         if (pieces[entityRemoving].piecesColor == PlayerColor.White) {
@@ -144,7 +143,7 @@ class DragAndDropSystem(
                 }
                 layers[draggedEntity].layer = SPRITE_LAYER_3
                 draggedEntity = null
-                draggedComponent.isDragged = false
+                dragged[gameEntity].isDragged = false
                 draggedEntity?.remove(DraggedComponent::class.java)
             }
         }

@@ -2,6 +2,7 @@ package com.goncharov.evgeny.chess.factory
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.goncharov.evgeny.chess.components.DraggedComponent
 import com.goncharov.evgeny.chess.components.GameComponent
 import com.goncharov.evgeny.chess.logic.PlayerColor
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
@@ -16,6 +17,8 @@ class GameFactory(
         val entityGame = Entity()
         val gameComponent = GameComponent(getFirstStep())
         entityGame.add(gameComponent)
+        val draggedComponent = DraggedComponent()
+        entityGame.add(draggedComponent)
         engine.addEntity(entityGame)
     }
 
