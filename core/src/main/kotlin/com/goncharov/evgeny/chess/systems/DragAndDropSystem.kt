@@ -6,6 +6,7 @@ import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
+import com.goncharov.evgeny.chess.components.DraggedComponent
 import com.goncharov.evgeny.chess.components.PiecesComponent
 import com.goncharov.evgeny.chess.components.RemovedPiecesComponent
 import com.goncharov.evgeny.chess.components.mappers.*
@@ -25,6 +26,8 @@ class DragAndDropSystem(
     private val gameComponent by lazy {
         game[engine.getEntitiesFor(gameFamily).first()]
     }
+    private val draggedComponent = DraggedComponent()
+    private var draggedEntity: Entity? = null
 
     override fun update(deltaTime: Float) {
         val entities = engine.getEntitiesFor(piecesFamily)
@@ -36,23 +39,20 @@ class DragAndDropSystem(
                 positionWorld.y > SPRITE_SIZE / 2 &&
                 positionWorld.y < WORLD_HEIGHT - SPRITE_SIZE / 2
             ) {
-                if (entities.all { entity ->
-                        !pieces[entity].isDragged
-                    }
-                ) {
+                if (!draggedComponent.isDragged) {
                     entities.forEach { entity ->
                         val sprite = sprites[entity].sprite
-                        if (
-                            sprite.boundingRectangle.contains(positionWorld) &&
+                        if (sprite.boundingRectangle.contains(positionWorld) &&
                             interactorController.checkingThePlayer(pieces[entity].piecesColor)
                         ) {
-                            pieces[entity].isDragged = true
+                            draggedComponent.isDragged = true
+                            entity.add(draggedComponent)
+                            draggedEntity = entity
+                            return@forEach
                         }
                     }
                 }
-                entities.firstOrNull { entity ->
-                    pieces[entity].isDragged
-                }?.let { entity ->
+                draggedEntity?.let { entity ->
                     sprites[entity].sprite.setCenter(
                         positionWorld.x,
                         positionWorld.y
@@ -60,92 +60,91 @@ class DragAndDropSystem(
                 }
             }
         } else {
-            if (entities.any { entity -> pieces[entity].isDragged }) {
-                entities.firstOrNull { entity ->
-                    pieces[entity].isDragged
-                }?.let { entity ->
-                    val positionWorld = worldViewport.unproject(
-                        Vector2(
-                            Gdx.input.x.toFloat(),
-                            Gdx.input.y.toFloat()
-                        )
+            if (draggedComponent.isDragged && draggedEntity != null) {
+                val positionWorld = worldViewport.unproject(
+                    Vector2(
+                        Gdx.input.x.toFloat(),
+                        Gdx.input.y.toFloat()
                     )
-                    pieces[entity].isDragged = false
-                    val cellsList = engine.getEntitiesFor(cellsFamily)
-                    val firstCell = cellsList.first()
-                    var tempDst = cells[firstCell].centrePosition.dst(positionWorld)
-                    var resultPositionBoard = cells[firstCell].positionBoard
-                    val resultPosition = Vector2(cells[firstCell].centrePosition)
-                    cellsList.forEach { cellEntity ->
-                        val cellDst = cells[cellEntity].centrePosition.dst(positionWorld)
-                        if (cellDst < tempDst) {
-                            tempDst = cellDst
-                            resultPositionBoard = cells[cellEntity].positionBoard
-                            resultPosition.set(cells[cellEntity].centrePosition)
-                        }
+                )
+                draggedEntity?.remove(DraggedComponent::class.java)
+                val cellsList = engine.getEntitiesFor(cellsFamily)
+                val firstCell = cellsList.first()
+                var tempDst = cells[firstCell].centrePosition.dst(positionWorld)
+                var resultPositionBoard = cells[firstCell].positionBoard
+                val resultPosition = Vector2(cells[firstCell].centrePosition)
+                cellsList.forEach { cellEntity ->
+                    val cellDst = cells[cellEntity].centrePosition.dst(positionWorld)
+                    if (cellDst < tempDst) {
+                        tempDst = cellDst
+                        resultPositionBoard = cells[cellEntity].positionBoard
+                        resultPosition.set(cells[cellEntity].centrePosition)
                     }
-                    if (isEmptyBoardPosition(entities, resultPositionBoard)) {
-                        //moving pieces
-                        pieces[entity].positionBoard = resultPositionBoard
-                        sprites[entity].sprite.setCenter(resultPosition.x, resultPosition.y)
-                        interactorController.turnChanged()
-                        changeOfMovingController.showMessageMoved()
+                }
+                if (isEmptyBoardPosition(entities, resultPositionBoard)) {
+                    //moving pieces
+                    pieces[draggedEntity].positionBoard = resultPositionBoard
+                    sprites[draggedEntity].sprite.setCenter(resultPosition.x, resultPosition.y)
+                    interactorController.turnChanged()
+                    changeOfMovingController.showMessageMoved()
+                } else {
+                    if (thisIsThePlayersFigure(entities, resultPositionBoard)) {
+                        //back pieces
+                        val cellEntity = cellsList.first { cellEntity ->
+                            cells[cellEntity].positionBoard == pieces[draggedEntity].positionBoard
+                        }
+                        sprites[draggedEntity].sprite.setCenter(
+                            cells[cellEntity].centrePosition.x,
+                            cells[cellEntity].centrePosition.y
+                        )
                     } else {
-                        if (thisIsThePlayersFigure(entities, resultPositionBoard)) {
-                            //back pieces
-                            val cellEntity = cellsList.first { cellEntity ->
-                                cells[cellEntity].positionBoard == pieces[entity].positionBoard
-                            }
-                            sprites[entity].sprite.setCenter(
-                                cells[cellEntity].centrePosition.x,
-                                cells[cellEntity].centrePosition.y
+                        //remove pieces
+                        val entityRemoving =
+                            getRemovingPieces(entities, resultPositionBoard)
+                        pieces[draggedEntity].positionBoard = resultPositionBoard
+                        sprites[draggedEntity].sprite.setCenter(resultPosition.x, resultPosition.y)
+                        if (!pieces[entityRemoving].isKingPieces) {
+                            interactorController.turnChanged()
+                            changeOfMovingController.showMessageMoved()
+                        } else {
+                            gameComponent.isGameOver = true
+                            gameOverController.gameOver(pieces[entityRemoving].piecesColor)
+                        }
+                        if (pieces[entityRemoving].piecesColor == PlayerColor.White) {
+                            val count = engine.getEntitiesFor(removedPiecesFamily)
+                                .count { entityRemoved ->
+                                    piecesRemoved[entityRemoved].piecesColor == PlayerColor.White
+                                } + 1
+                            val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
+                            sprites[entityRemoving].sprite.setPosition(
+                                if (count < 9) widthOffset + SPRITE_SIZE * 8
+                                else widthOffset + SPRITE_SIZE * 9,
+                                if (count < 9) WORLD_HEIGHT - count * SPRITE_SIZE - SIZE_SHADOW
+                                else WORLD_HEIGHT - (count - 8) * SPRITE_SIZE - SIZE_SHADOW
                             )
                         } else {
-                            //remove pieces
-                            val entityRemoving = getRemovingPieces(entities, resultPositionBoard)
-                            pieces[entity].positionBoard = resultPositionBoard
-                            sprites[entity].sprite.setCenter(resultPosition.x, resultPosition.y)
-                            if (!pieces[entityRemoving].isKingPieces) {
-                                interactorController.turnChanged()
-                                changeOfMovingController.showMessageMoved()
-                            } else {
-                                gameComponent.isGameOver = true
-                                gameOverController.gameOver(pieces[entityRemoving].piecesColor)
-                            }
-                            if (pieces[entityRemoving].piecesColor == PlayerColor.White) {
-                                val count = engine.getEntitiesFor(removedPiecesFamily)
-                                    .count { entityRemoved ->
-                                        piecesRemoved[entityRemoved].piecesColor == PlayerColor.White
-                                    } + 1
-                                val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
-                                sprites[entityRemoving].sprite.setPosition(
-                                    if (count < 9) widthOffset + SPRITE_SIZE * 8
-                                    else widthOffset + SPRITE_SIZE * 9,
-                                    if (count < 9) WORLD_HEIGHT - count * SPRITE_SIZE - SIZE_SHADOW
-                                    else WORLD_HEIGHT - (count - 8) * SPRITE_SIZE - SIZE_SHADOW
-                                )
-                            } else {
-                                val count = engine.getEntitiesFor(removedPiecesFamily)
-                                    .count { entityRemoved ->
-                                        piecesRemoved[entityRemoved].piecesColor == PlayerColor.Black
-                                    }
-                                val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
-                                sprites[entityRemoving].sprite.setPosition(
-                                    if (count < 8) widthOffset - SPRITE_SIZE
-                                    else widthOffset - SPRITE_SIZE * 2,
-                                    if (count < 8) count * SPRITE_SIZE + SIZE_SHADOW
-                                    else (count - 8) * SPRITE_SIZE + SIZE_SHADOW
-                                )
-                            }
-                            val removedPiecesComponent = RemovedPiecesComponent(
-                                pieces[entityRemoving].piecesColor
+                            val count = engine.getEntitiesFor(removedPiecesFamily)
+                                .count { entityRemoved ->
+                                    piecesRemoved[entityRemoved].piecesColor == PlayerColor.Black
+                                }
+                            val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
+                            sprites[entityRemoving].sprite.setPosition(
+                                if (count < 8) widthOffset - SPRITE_SIZE
+                                else widthOffset - SPRITE_SIZE * 2,
+                                if (count < 8) count * SPRITE_SIZE + SIZE_SHADOW
+                                else (count - 8) * SPRITE_SIZE + SIZE_SHADOW
                             )
-                            entityRemoving.add(removedPiecesComponent)
-                            entityRemoving.remove(PiecesComponent::class.java)
                         }
+                        val removedPiecesComponent = RemovedPiecesComponent(
+                            pieces[entityRemoving].piecesColor
+                        )
+                        entityRemoving.add(removedPiecesComponent)
+                        entityRemoving.remove(PiecesComponent::class.java)
                     }
                 }
             }
+            draggedEntity = null
+            draggedComponent.isDragged = false
         }
     }
 
