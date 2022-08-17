@@ -3,6 +3,7 @@ package com.goncharov.evgeny.chess.factory
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.Sprite
+import com.goncharov.evgeny.chess.components.LayerComponent
 import com.goncharov.evgeny.chess.components.PiecesComponent
 import com.goncharov.evgeny.chess.components.SpriteComponent
 import com.goncharov.evgeny.chess.consts.*
@@ -174,6 +175,8 @@ class PiecesFactory(
         )
         piecesEntity.add(spriteComponent)
         piecesEntity.add(piecesComponent)
+        val layerComponent = LayerComponent(SPRITE_LAYER_3)
+        piecesEntity.add(layerComponent)
         engine.addEntity(piecesEntity)
     }
 }
