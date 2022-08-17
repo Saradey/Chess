@@ -14,6 +14,7 @@ class RenderSystem(
 ) : SortedIteratingSystem(renderFamily, LayerComparator()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
+        forceSort()
         viewport.apply()
         batch.projectionMatrix = viewport.camera.combined
         batch.begin()

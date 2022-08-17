@@ -18,3 +18,4 @@ const val SPRITE_SIZE = (WORLD_HEIGHT - SIZE_SHADOW * 2) / 8
 const val SPRITE_LAYER_1 = 1
 const val SPRITE_LAYER_2 = 2
 const val SPRITE_LAYER_3 = 3
+const val DRAGGED_LAYER_4 = 4

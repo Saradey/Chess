@@ -48,6 +48,7 @@ class DragAndDropSystem(
                             draggedComponent.isDragged = true
                             entity.add(draggedComponent)
                             draggedEntity = entity
+                            layers[draggedEntity].layer = DRAGGED_LAYER_4
                             return@forEach
                         }
                     }
@@ -141,6 +142,7 @@ class DragAndDropSystem(
                         entityRemoving.remove(PiecesComponent::class.java)
                     }
                 }
+                layers[draggedEntity].layer = SPRITE_LAYER_3
                 draggedEntity = null
                 draggedComponent.isDragged = false
                 draggedEntity?.remove(DraggedComponent::class.java)
