@@ -10,7 +10,7 @@ import com.goncharov.evgeny.chess.logic.PlayerColor
 
 class PutInPlaceSystem : IteratingSystem(removedPiecesFamily) {
 
-    private var countRemovedBlack = 1
+    private var countRemovedBlack = 0
     private var countRemovedWhite = 1
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
