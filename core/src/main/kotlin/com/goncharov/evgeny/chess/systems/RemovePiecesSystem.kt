@@ -47,6 +47,7 @@ class RemovePiecesSystem(
                 pieces[entityRemoving].piecesColor
             )
             entityRemoving.add(removedPiecesComponent)
+            entityRemoving.remove(PiecesComponent::class.java)
             moveWasMade(entity)
         }
     }

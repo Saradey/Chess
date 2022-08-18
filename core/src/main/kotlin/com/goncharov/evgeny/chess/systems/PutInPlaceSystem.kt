@@ -15,7 +15,7 @@ class PutInPlaceSystem : IteratingSystem(removedPiecesFamily) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if (!piecesRemoved[entity].putInPlace) {
-            if (pieces[entity].piecesColor == PlayerColor.White) {
+            if (piecesRemoved[entity].piecesColor == PlayerColor.White) {
                 sprites[entity].sprite.setPosition(
                     if (countRemovedWhite < 9) WIDTH_OFFSET + SPRITE_SIZE * 8
                     else WIDTH_OFFSET + SPRITE_SIZE * 9,
