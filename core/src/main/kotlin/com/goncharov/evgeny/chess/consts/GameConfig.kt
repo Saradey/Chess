@@ -19,3 +19,5 @@ const val SPRITE_LAYER_1 = 1
 const val SPRITE_LAYER_2 = 2
 const val SPRITE_LAYER_3 = 3
 const val DRAGGED_LAYER_4 = 4
+
+const val WIDTH_OFFSET = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
