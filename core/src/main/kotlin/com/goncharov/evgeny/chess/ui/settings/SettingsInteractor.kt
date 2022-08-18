@@ -1,4 +1,4 @@
-package com.goncharov.evgeny.chess.interactors
+package com.goncharov.evgeny.chess.ui.settings
 
 interface SettingsInteractor {
 

@@ -1,4 +1,4 @@
-package com.goncharov.evgeny.chess.ui
+package com.goncharov.evgeny.chess.ui.settings
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.extensions.addListenerKtx
-import com.goncharov.evgeny.chess.interactors.SettingsInteractor
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.screens.settings.SettingsScreen

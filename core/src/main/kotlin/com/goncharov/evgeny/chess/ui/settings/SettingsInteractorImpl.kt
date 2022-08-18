@@ -1,4 +1,4 @@
-package com.goncharov.evgeny.chess.interactors
+package com.goncharov.evgeny.chess.ui.settings
 
 import com.goncharov.evgeny.chess.consts.TEXT_BOARD_COLOR_BROWN
 import com.goncharov.evgeny.chess.consts.TEXT_BOARD_COLOR_GRAY

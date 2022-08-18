@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FillViewport
 import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
-import com.goncharov.evgeny.chess.interactors.SettingsInteractorImpl
+import com.goncharov.evgeny.chess.ui.settings.SettingsInteractorImpl
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
-import com.goncharov.evgeny.chess.ui.SettingsStageImpl
+import com.goncharov.evgeny.chess.ui.settings.SettingsStageImpl
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
 
