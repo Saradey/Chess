@@ -21,3 +21,7 @@ val renderFamily: Family = Family.all(
     SpriteComponent::class.java,
     LayerComponent::class.java
 ).get()
+
+val draggedFamily: Family =  Family.all(
+    DraggedComponent::class.java
+).get()

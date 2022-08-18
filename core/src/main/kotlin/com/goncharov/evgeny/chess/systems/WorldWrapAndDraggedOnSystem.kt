@@ -31,6 +31,7 @@ class WorldWrapAndDraggedOnSystem(
                         worldWrapInteractor.checkedClickPosition(entity, positionWorld)
                     ) {
                         dragged[gameEntity].isDragged = true
+                        dragged[gameEntity].positionDragged = positionWorld
                         entity.add(dragged[gameEntity])
                         layers[entity].layer = DRAGGED_LAYER_4
                         return@forEach
