@@ -58,6 +58,17 @@ class DropInteractorImpl : DropInteractor {
         } ?: false
     }
 
+    override fun getRemovingPieces(entities: ImmutableArray<Entity>): Entity {
+        return entities.first { entity ->
+            pieces[entity].positionBoard == resultPositionBoard
+        }
+    }
+
+    override fun moveWasMade() {
+        resultPositionBoard = null
+        resultPosition = null
+    }
+
     companion object {
         private const val MUST_NOT_NULL_POSITION_BOARD = "resultPositionBoard must not bu null"
         private const val MUST_NOT_NULL_POSITION = "resultPosition must not bu null"

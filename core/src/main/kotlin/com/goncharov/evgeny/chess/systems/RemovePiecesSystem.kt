@@ -4,16 +4,23 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import com.goncharov.evgeny.chess.components.DraggedComponent
+import com.goncharov.evgeny.chess.components.PiecesComponent
+import com.goncharov.evgeny.chess.components.RemovedPiecesComponent
 import com.goncharov.evgeny.chess.components.mappers.*
-import com.goncharov.evgeny.chess.consts.*
+import com.goncharov.evgeny.chess.consts.SPRITE_LAYER_3
+import com.goncharov.evgeny.chess.consts.draggedFamily
+import com.goncharov.evgeny.chess.consts.gameFamily
+import com.goncharov.evgeny.chess.consts.piecesFamily
 import com.goncharov.evgeny.chess.controllers.ChangeOfMovingController
+import com.goncharov.evgeny.chess.controllers.GameOverController
 import com.goncharov.evgeny.chess.interactors.DropInteractor
 import com.goncharov.evgeny.chess.interactors.GameInteractor
 
-class MovingSystem(
+class RemovePiecesSystem(
     private val dropInteractor: DropInteractor,
     private val changeOfMovingController: ChangeOfMovingController,
-    private val gameInteractor: GameInteractor
+    private val gameInteractor: GameInteractor,
+    private val gameOverController: GameOverController
 ) : IteratingSystem(draggedFamily) {
 
     private val gameEntity by lazy {
@@ -25,26 +32,23 @@ class MovingSystem(
             dragged[gameEntity].isDragged
         ) {
             val entities = engine.getEntitiesFor(piecesFamily)
-            if (dropInteractor.isEmptyBoardPosition(entities)) {
-                //moving pieces
-                pieces[entity].positionBoard = dropInteractor.getResultPositionBoard()
-                val resultPosition = dropInteractor.getResultPosition()
-                sprites[entity].sprite.setCenter(resultPosition.x, resultPosition.y)
+            val entityRemoving = dropInteractor.getRemovingPieces(entities)
+            pieces[entity].positionBoard = dropInteractor.getResultPositionBoard()
+            val resultPosition = dropInteractor.getResultPosition()
+            sprites[entity].sprite.setCenter(resultPosition.x, resultPosition.y)
+            if (!pieces[entityRemoving].isKingPieces) {
                 gameInteractor.turnChanged()
                 changeOfMovingController.showMessageMoved()
-                moveWasMade(entity)
-            } else if (dropInteractor.thisIsThePlayersFigure(entities, game[gameEntity])) {
-                //back pieces
-                val cellsList = engine.getEntitiesFor(cellsFamily)
-                val cellEntity = cellsList.first { cellEntity ->
-                    cells[cellEntity].positionBoard == pieces[entity].positionBoard
-                }
-                sprites[entity].sprite.setCenter(
-                    cells[cellEntity].centrePosition.x,
-                    cells[cellEntity].centrePosition.y
-                )
-                moveWasMade(entity)
+            } else {
+                game[gameEntity].isGameOver = true
+                gameOverController.gameOver(pieces[entityRemoving].piecesColor)
             }
+            val removedPiecesComponent = RemovedPiecesComponent(
+                pieces[entityRemoving].piecesColor
+            )
+            entityRemoving.add(removedPiecesComponent)
+            entityRemoving.remove(PiecesComponent::class.java)
+            moveWasMade(entity)
         }
     }
 

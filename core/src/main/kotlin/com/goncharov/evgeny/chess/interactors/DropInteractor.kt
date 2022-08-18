@@ -24,4 +24,8 @@ interface DropInteractor {
         entities: ImmutableArray<Entity>,
         gameComponent: GameComponent
     ): Boolean
+
+    fun getRemovingPieces(entities: ImmutableArray<Entity>): Entity
+
+    fun moveWasMade()
 }
