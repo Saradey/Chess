@@ -7,12 +7,15 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.goncharov.evgeny.chess.components.mappers.dragged
 import com.goncharov.evgeny.chess.components.mappers.game
 import com.goncharov.evgeny.chess.components.mappers.layers
+import com.goncharov.evgeny.chess.components.mappers.pieces
 import com.goncharov.evgeny.chess.consts.*
+import com.goncharov.evgeny.chess.interactors.GameInteractor
 import com.goncharov.evgeny.chess.interactors.WorldWrapInteractor
 
 class WorldWrapAndDraggedOnSystem(
     private val worldViewport: Viewport,
-    private val worldWrapInteractor: WorldWrapInteractor
+    private val worldWrapInteractor: WorldWrapInteractor,
+    private val gameInteractor: GameInteractor
 ) : EntitySystem() {
 
     private val gameEntity by lazy {
@@ -28,10 +31,10 @@ class WorldWrapAndDraggedOnSystem(
             if (worldWrapInteractor.worldWrapPosition(positionWorld)) {
                 entities.forEach { entity ->
                     if (!dragged[gameEntity].isDragged &&
-                        worldWrapInteractor.checkedClickPosition(entity, positionWorld)
+                        worldWrapInteractor.checkedClickPosition(entity, positionWorld) &&
+                        gameInteractor.checkingThePlayer(pieces[entity].piecesColor)
                     ) {
                         dragged[gameEntity].isDragged = true
-                        dragged[gameEntity].positionDragged = positionWorld
                         entity.add(dragged[gameEntity])
                         layers[entity].layer = DRAGGED_LAYER_4
                         return@forEach

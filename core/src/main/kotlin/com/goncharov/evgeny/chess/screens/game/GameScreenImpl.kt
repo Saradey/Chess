@@ -62,8 +62,14 @@ class GameScreenImpl(
         chessBoardFactory.addBackground()
         piecesFactory.buildWhitePiecesPlayer()
         piecesFactory.buildBlackPiecesPlayer()
-        engine.addSystem(WorldWrapAndDraggedOnSystem(viewport, WorldWrapInteractorImpl()))
-        engine.addSystem(DragSystem())
+        engine.addSystem(
+            WorldWrapAndDraggedOnSystem(
+                viewport,
+                WorldWrapInteractorImpl(),
+                gameController
+            )
+        )
+        engine.addSystem(DragSystem(viewport))
         engine.addSystem(CalculationSystem(viewport, dropInteractor))
         engine.addSystem(MovingSystem(dropInteractor, changeOfMovingController, gameController))
         engine.addSystem(
