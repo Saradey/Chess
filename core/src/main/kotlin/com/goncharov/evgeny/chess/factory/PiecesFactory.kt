@@ -17,7 +17,7 @@ class PiecesFactory(
     private val gameAtlas = resourceManager[GAME_ASSET_DESCRIPTOR]
 
     fun buildWhitePiecesPlayer() {
-        val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
+        val widthOffset = WIDTH_OFFSET
         //add pawn
         for (index in 0..7) {
             addEntityPieces(
@@ -84,11 +84,10 @@ class PiecesFactory(
     }
 
     fun buildBlackPiecesPlayer() {
-        val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
         //add pawn
         for (index in 0..7) {
             addEntityPieces(
-                index * SPRITE_SIZE + widthOffset,
+                index * SPRITE_SIZE + WIDTH_OFFSET,
                 WORLD_HEIGHT - SPRITE_SIZE * 2 - SIZE_SHADOW,
                 Sprite(gameAtlas.findRegion(BLACK_PAWN_ID)),
                 PlayerColor.Black
@@ -96,53 +95,53 @@ class PiecesFactory(
         }
         //add tower
         addEntityPieces(
-            widthOffset,
+            WIDTH_OFFSET,
             WORLD_HEIGHT - SPRITE_SIZE - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_ROOK_ID)),
             PlayerColor.Black
         )
         addEntityPieces(
-            widthOffset + SPRITE_SIZE * 7,
+            WIDTH_OFFSET + SPRITE_SIZE * 7,
             WORLD_HEIGHT - SPRITE_SIZE - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_ROOK_ID)),
             PlayerColor.Black
         )
         //add horse
         addEntityPieces(
-            widthOffset + SPRITE_SIZE,
+            WIDTH_OFFSET + SPRITE_SIZE,
             WORLD_HEIGHT - SPRITE_SIZE - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_KNIGHT_ID)),
             PlayerColor.Black
         )
         addEntityPieces(
-            widthOffset + SPRITE_SIZE * 6,
+            WIDTH_OFFSET + SPRITE_SIZE * 6,
             WORLD_HEIGHT - SPRITE_SIZE - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_KNIGHT_ID)),
             PlayerColor.Black
         )
         //add elephant
         addEntityPieces(
-            widthOffset + SPRITE_SIZE * 2,
+            WIDTH_OFFSET + SPRITE_SIZE * 2,
             WORLD_HEIGHT - SPRITE_SIZE - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_BISHOP_ID)),
             PlayerColor.Black
         )
         addEntityPieces(
-            widthOffset + SPRITE_SIZE * 5,
+            WIDTH_OFFSET + SPRITE_SIZE * 5,
             WORLD_HEIGHT - SPRITE_SIZE - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_BISHOP_ID)),
             PlayerColor.Black
         )
         //add queen
         addEntityPieces(
-            widthOffset + SPRITE_SIZE * 3,
+            WIDTH_OFFSET + SPRITE_SIZE * 3,
             WORLD_HEIGHT - SPRITE_SIZE - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_QUEEN_ID)),
             PlayerColor.Black
         )
         //add king
         addEntityPieces(
-            widthOffset + SPRITE_SIZE * 4,
+            WIDTH_OFFSET + SPRITE_SIZE * 4,
             WORLD_HEIGHT - SPRITE_SIZE - SIZE_SHADOW,
             Sprite(gameAtlas.findRegion(BLACK_KING_ID)),
             PlayerColor.Black,
@@ -164,11 +163,10 @@ class PiecesFactory(
             y
         )
         val spriteComponent = SpriteComponent(piecesSprite)
-        val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
         val piecesComponent = PiecesComponent(
             piecesColor = piecesColor,
             positionBoard = Pair(
-                ((x - widthOffset) / SPRITE_SIZE).toInt(),
+                ((x - WIDTH_OFFSET) / SPRITE_SIZE).toInt(),
                 ((y - SIZE_SHADOW) / SPRITE_SIZE).toInt()
             ),
             isKingPieces = isKing

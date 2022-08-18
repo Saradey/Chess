@@ -20,7 +20,6 @@ class ChessBoardFactory(
     private val gameAtlas = resourceManager[GAME_ASSET_DESCRIPTOR]
 
     fun buildChessBoard() {
-        val widthOffset = WORLD_ORIGIN_WIDTH - WORlD_ORIGIN_HEIGHT
         val heightOffset = SIZE_SHADOW
         for (y in 0..7) {
             for (x in 0..7) {
@@ -32,7 +31,7 @@ class ChessBoardFactory(
                     else -> Sprite(getLightColorBoard())
                 }
                 spriteBoard.setSize(SPRITE_SIZE, SPRITE_SIZE)
-                val xPosition = x * SPRITE_SIZE + widthOffset
+                val xPosition = x * SPRITE_SIZE + WIDTH_OFFSET
                 val yPosition = y * SPRITE_SIZE + heightOffset
                 spriteBoard.setPosition(
                     xPosition,
@@ -45,7 +44,7 @@ class ChessBoardFactory(
                         spriteBoard.y + spriteBoard.height / 2
                     ),
                     Pair(
-                        ((xPosition - widthOffset) / SPRITE_SIZE).toInt(),
+                        ((xPosition - WIDTH_OFFSET) / SPRITE_SIZE).toInt(),
                         ((yPosition - SIZE_SHADOW) / SPRITE_SIZE).toInt()
                     )
                 )
@@ -59,17 +58,17 @@ class ChessBoardFactory(
         }
         addShadow(
             0f,
-            SPRITE_SIZE * 8 + widthOffset,
+            SPRITE_SIZE * 8 + WIDTH_OFFSET,
             SIZE_SHADOW,
         )
         addShadow(
             180f,
-            widthOffset - SIZE_SHADOW,
+            WIDTH_OFFSET - SIZE_SHADOW,
             -SIZE_SHADOW,
         )
         addShadow(
             270f,
-            widthOffset - 5f + WORlD_ORIGIN_HEIGHT,
+            WIDTH_OFFSET - 5f + WORlD_ORIGIN_HEIGHT,
             -WORlD_ORIGIN_HEIGHT + 5f,
         )
         addShadow(

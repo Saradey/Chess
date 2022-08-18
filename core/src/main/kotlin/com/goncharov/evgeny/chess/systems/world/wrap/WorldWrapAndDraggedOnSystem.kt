@@ -1,4 +1,4 @@
-package com.goncharov.evgeny.chess.systems
+package com.goncharov.evgeny.chess.systems.world.wrap
 
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Gdx
@@ -10,7 +10,6 @@ import com.goncharov.evgeny.chess.components.mappers.layers
 import com.goncharov.evgeny.chess.components.mappers.pieces
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.interactors.GameInteractor
-import com.goncharov.evgeny.chess.interactors.WorldWrapInteractor
 
 class WorldWrapAndDraggedOnSystem(
     private val worldViewport: Viewport,

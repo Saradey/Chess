@@ -1,4 +1,4 @@
-package com.goncharov.evgeny.chess.interactors
+package com.goncharov.evgeny.chess.systems.world.wrap
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2

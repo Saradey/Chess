@@ -16,6 +16,8 @@ import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
 import com.goncharov.evgeny.chess.systems.*
+import com.goncharov.evgeny.chess.systems.world.wrap.WorldWrapAndDraggedOnSystem
+import com.goncharov.evgeny.chess.systems.world.wrap.WorldWrapInteractorImpl
 import com.goncharov.evgeny.chess.ui.game.GameStageImpl
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
@@ -47,7 +49,7 @@ class GameScreenImpl(
     private val gameFactory = GameFactory(savedSettingsManager, engine)
     private val changeOfMovingController: ChangeOfMovingController =
         ChangeOfMovingControllerImpl(gameStage, savedSettingsManager, engine)
-    private val gameController: GameInteractor = GameInteractorImpl(engine)
+    private val gameInteractor: GameInteractor = GameInteractorImpl(engine)
     private val gameOverController: GameOverController = GameOverControllerImpl(
         engine,
         gameStage
@@ -66,17 +68,17 @@ class GameScreenImpl(
             WorldWrapAndDraggedOnSystem(
                 viewport,
                 WorldWrapInteractorImpl(),
-                gameController
+                gameInteractor
             )
         )
         engine.addSystem(DragSystem(viewport))
         engine.addSystem(CalculationSystem(viewport, dropInteractor))
-        engine.addSystem(MovingSystem(dropInteractor, changeOfMovingController, gameController))
+        engine.addSystem(MovingSystem(dropInteractor, changeOfMovingController, gameInteractor))
         engine.addSystem(
             RemovePiecesSystem(
                 dropInteractor,
                 changeOfMovingController,
-                gameController,
+                gameInteractor,
                 gameOverController
             )
         )
