@@ -5,7 +5,6 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.goncharov.evgeny.chess.components.mappers.cells
 import com.goncharov.evgeny.chess.components.mappers.dragged
 import com.goncharov.evgeny.chess.components.mappers.game
 import com.goncharov.evgeny.chess.consts.cellsFamily
@@ -13,7 +12,7 @@ import com.goncharov.evgeny.chess.consts.draggedFamily
 import com.goncharov.evgeny.chess.consts.gameFamily
 import com.goncharov.evgeny.chess.interactors.DropInteractor
 
-class DropSystem(
+class CalculationSystem(
     private val worldViewport: Viewport,
     private val dropInteractor: DropInteractor
 ) : IteratingSystem(draggedFamily) {
