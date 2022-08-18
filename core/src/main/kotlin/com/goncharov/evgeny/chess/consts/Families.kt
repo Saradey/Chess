@@ -22,6 +22,7 @@ val renderFamily: Family = Family.all(
     LayerComponent::class.java
 ).get()
 
-val draggedFamily: Family =  Family.all(
-    DraggedComponent::class.java
+val draggedFamily: Family = Family.all(
+    DraggedComponent::class.java,
+    PiecesComponent::class.java
 ).get()

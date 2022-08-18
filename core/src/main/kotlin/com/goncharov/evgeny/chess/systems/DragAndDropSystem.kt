@@ -16,6 +16,7 @@ import com.goncharov.evgeny.chess.interactors.GameInteractor
 import com.goncharov.evgeny.chess.controllers.GameOverController
 import com.goncharov.evgeny.chess.logic.PlayerColor
 
+@Deprecated("don't use")
 class DragAndDropSystem(
     private val worldViewport: Viewport,
     private val changeOfMovingController: ChangeOfMovingController,

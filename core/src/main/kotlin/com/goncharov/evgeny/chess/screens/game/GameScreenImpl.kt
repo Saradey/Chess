@@ -10,14 +10,12 @@ import com.goncharov.evgeny.chess.controllers.*
 import com.goncharov.evgeny.chess.factory.ChessBoardFactory
 import com.goncharov.evgeny.chess.factory.GameFactory
 import com.goncharov.evgeny.chess.factory.PiecesFactory
-import com.goncharov.evgeny.chess.interactors.GameInteractor
-import com.goncharov.evgeny.chess.interactors.GameInteractorImpl
+import com.goncharov.evgeny.chess.interactors.*
 import com.goncharov.evgeny.chess.managers.ResourceManager
 import com.goncharov.evgeny.chess.managers.SavedSettingsManager
 import com.goncharov.evgeny.chess.navigation.NavigationKey
 import com.goncharov.evgeny.chess.navigation.Navigator
-import com.goncharov.evgeny.chess.systems.DragAndDropSystem
-import com.goncharov.evgeny.chess.systems.RenderSystem
+import com.goncharov.evgeny.chess.systems.*
 import com.goncharov.evgeny.chess.ui.game.GameStageImpl
 import com.goncharov.evgeny.chess.utils.clearScreen
 import com.goncharov.evgeny.chess.utils.debug
@@ -54,6 +52,7 @@ class GameScreenImpl(
         engine,
         gameStage
     )
+    private val dropInteractor = DropInteractorImpl()
 
     override fun show() {
         debug(TAG, "show()")
@@ -63,14 +62,19 @@ class GameScreenImpl(
         chessBoardFactory.addBackground()
         piecesFactory.buildWhitePiecesPlayer()
         piecesFactory.buildBlackPiecesPlayer()
+        engine.addSystem(WorldWrapAndDraggedOnSystem(viewport, WorldWrapInteractorImpl()))
+        engine.addSystem(DragSystem())
+        engine.addSystem(CalculationSystem(viewport, dropInteractor))
+        engine.addSystem(MovingSystem(dropInteractor, changeOfMovingController, gameController))
         engine.addSystem(
-            DragAndDropSystem(
-                viewport,
+            RemovePiecesSystem(
+                dropInteractor,
                 changeOfMovingController,
                 gameController,
                 gameOverController
             )
         )
+        engine.addSystem(PutInPlaceSystem())
         engine.addSystem(RenderSystem(viewport, batch))
         changeOfMovingController.initMessageMoving()
     }
