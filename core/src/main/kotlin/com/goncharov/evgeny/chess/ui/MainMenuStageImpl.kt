@@ -90,7 +90,6 @@ class MainMenuStageImpl(
     private fun startPlayerVsPlayerGame() {
         soundClickButton.play()
         mainMenuScreen.goToTheGameScreen()
-
     }
 
     private fun startSettings() {

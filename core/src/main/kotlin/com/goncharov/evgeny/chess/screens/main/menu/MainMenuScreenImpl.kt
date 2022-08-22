@@ -1,9 +1,9 @@
 package com.goncharov.evgeny.chess.screens.main.menu
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FillViewport
-import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.managers.MusicManager
 import com.goncharov.evgeny.chess.managers.ResourceManager
@@ -18,7 +18,7 @@ class MainMenuScreenImpl(
     batch: SpriteBatch,
     resourceManager: ResourceManager,
     musicManager: MusicManager
-) : BaseScreen(), MainMenuScreen {
+) : ScreenAdapter(), MainMenuScreen {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
     private val stage = MainMenuStageImpl(

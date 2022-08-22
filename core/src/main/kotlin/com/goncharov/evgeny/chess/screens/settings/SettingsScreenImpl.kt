@@ -1,9 +1,9 @@
 package com.goncharov.evgeny.chess.screens.settings
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FillViewport
-import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.ui.settings.SettingsInteractorImpl
 import com.goncharov.evgeny.chess.managers.ResourceManager
@@ -19,7 +19,7 @@ class SettingsScreenImpl(
     bach: SpriteBatch,
     resourceManager: ResourceManager,
     savedSettingsManager: SavedSettingsManager
-) : BaseScreen(), SettingsScreen {
+) : ScreenAdapter(), SettingsScreen {
 
     private val viewport = FillViewport(UI_WIDTH, UI_HEIGHT)
     private val stage = SettingsStageImpl(

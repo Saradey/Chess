@@ -2,9 +2,9 @@ package com.goncharov.evgeny.chess.screens.game
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FillViewport
-import com.goncharov.evgeny.chess.base.BaseScreen
 import com.goncharov.evgeny.chess.consts.*
 import com.goncharov.evgeny.chess.controllers.*
 import com.goncharov.evgeny.chess.factory.ChessBoardFactory
@@ -27,7 +27,7 @@ class GameScreenImpl(
     resourceManager: ResourceManager,
     savedSettingsManager: SavedSettingsManager,
     private val navigator: Navigator
-) : BaseScreen(), GameScreen {
+) : ScreenAdapter(), GameScreen {
 
     private val viewport = FillViewport(WORLD_WIDTH, WORLD_HEIGHT)
     private val hudViewport = FillViewport(UI_WIDTH, UI_HEIGHT)
